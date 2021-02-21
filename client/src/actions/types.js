@@ -1,0 +1,50 @@
+//AUTH
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const USER_LOADED = 'USER_LOADED';
+export const LOGOUT = 'LOGOUT';
+export const UPDATE_USER = 'UPDATE_USER';
+export const SET_DISTANCE_TYPE = 'SET_DISTANCE_TYPE';
+
+//EVENTS
+export const GET_EVENTS = 'GET_EVENTS';
+export const GET_EVENT = 'GET_EVENT';
+export const GET_EVENT_ERROR = 'GET_EVENT_ERROR';
+export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const SET_LOADING = 'SET_LOADING';
+export const SET_SHOW_SEARCHED = 'SET_SHOW_SEARCHED';
+export const CLEAR_EVENT = 'CLEAR_EVENT';
+export const SET_TITLES = 'SET_TITLES';
+
+//MENUS
+export const GET_MENUS = 'GET_MENUS';
+
+//FORMS
+export const GET_FORM = 'GET_FORM';
+export const CLEAR_FORM = 'CLEAR_FORM';
+
+//Alert
+export const SET_DIALOG = 'SET_DIALOG';
+export const REMOVE_DIALOG = 'REMOVE_DIALOG';
+
+//Registranst info
+export const SET_REGISTRANTS_DATA = 'SET_REGISTRANTS_DATA';
+export const SUBMITTING_FORM = 'SUBMITTING_FORM';
+export const CLEAR_REGISTRANTS_DATA = 'CLEAR_REGISTRANTS_DATA';
+
+export const SET_LOADING_OVERLAY = 'SET_LOADING_OVERLAY';
+
+//Activities
+export const LOAD_RECENT_ACTIVITIES = 'LOAD_RECENT_ACTIVITIES';
+export const LOAD_UPCOMING_ACTIVITIES = 'LOAD_UPCOMING_ACTIVITIES';
+export const SET_ROW_SELECTED = 'SET_ROW_SELECTED';
+export const REMOVE_ROW_SELECTED = 'REMOVE_ROW_SELECTED';
+export const SET_CHANGES = 'SET_CHANGES';
+
+// utills
+export const SET_COUNTRIES = 'SET_COUNTRIES';
+export const CLEAR_SELECTED_COUNTRY_PROPS = 'CLEAR_SELECTED_COUNTRY_PROPS';
+export const SET_COUNTRY_PROPS = 'SET_COUNTRY_PROPS';
