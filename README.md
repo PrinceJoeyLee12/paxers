@@ -75,7 +75,7 @@ node server.js
 
 Check in browser on [http://localhost:5000/](http://localhost:5000/)
 
-## My pursuit as web developer
+## My pursuit as a Web developer
 
 I already love programming with C arduino and C# during my college days but I was held up by what others say to me like "it's to hard for you to do it and so on..." and because of it my fear grows to not do it. But luckily I got out from nay sayers by changing my mindset through reading a tons of books and listening to few motivators out there. And when pandemic happens I had the opportunity and the time to do it.
 
