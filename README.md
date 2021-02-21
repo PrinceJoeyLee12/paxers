@@ -73,13 +73,6 @@ node server.js
 
 Check in browser on [http://localhost:5000/]
 
-## Acknowledgment
-
-For a little knowledge about web development I struggled a lot understanding
-in the start of this project but as I got the hang of it through the power of repetition, I realize it was fun.
-
-Special thanks to all the gurus out there for making me knowledgeable about this field especially to [Traversy Media](https://www.youtube.com/c/TraversyMedia/featured) (I do really get a lot from him) and to my family and girlfriend who are very understanding and supportive to what I do.
-
 ## My pursuit as web developer
 
 I already love programming with C arduino and C# during my college days but I was held up by what others say to me like "it's to hard for you to do it and so on..." and because of it my fear grows to not do it. But luckily I got out from nay sayers by changing my mindset through reading a tons of books and listening to few motivators out there. And when pandemic happens I had the opportunity and the time to do it.
@@ -117,5 +110,12 @@ I divided the project into TWO audience
 ### For Organizers (0% done)
 
 1.  I'll figure out soon what would be the MVP for them
+
+## Acknowledgment
+
+For a little knowledge about web development I struggled a lot understanding
+in the start of this project but as I got the hang of it through the power of repetition, I realize it was fun.
+
+Special thanks to all the gurus out there for making me knowledgeable about this field especially to [Traversy Media](https://www.youtube.com/c/TraversyMedia/featured) (I do really get a lot from him) and to my family and girlfriend who are very understanding and supportive to what I do.
 
 # Especial thanks to you for reading all of this. God speed
