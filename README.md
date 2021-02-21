@@ -16,7 +16,9 @@ SECRET_KEY = "mysecret"
 REGISTRATION_EXPIRATION=2
 
 #for uploading photos to cloundinary.com
-#You can have this two below skipped for i set my api_base_url and #upload_preset to my client for uploading photos and i made it public (I know #this is a bad habit, #but this is for the sake of quick start)
+#You can have this two below skipped for I set my api_base_url and
+#upload_preset to my client for uploading photos and I made it public (I know
+#this is a bad habit, but this is for the sake of quick start)
 API_BASE_URL="<your_cloudinary_api_base_url>"
 UPLOAD_PRESENT="<your_upload_present_for_cloudinary>"
 ```
@@ -71,7 +73,7 @@ set NODE_ENV="production"
 node server.js
 ```
 
-Check in browser on [http://localhost:5000/]
+Check in browser on [http://localhost:5000/](http://localhost:5000/)
 
 ## My pursuit as web developer
 
@@ -80,7 +82,7 @@ I already love programming with C arduino and C# during my college days but I wa
 I decided to build a project that is a problem-solving one and that really matters to me and to the world rather than building small application that don't really matters or solve problem. As you can see this is my first repository in GITHUB.
 
 I am a runner, an elite runner, and I saw a pain-point to my field where organizers want to make an event (e.g. virtual race) where data are log manually, meaning by hand/through excel.
-And through this website they can manage and fully automate the work of logging and validating runners' activities by syncing there data through the most popular app called [STRAVA] (https://www.strava.com/).
+And through this website they can manage and fully automate the work of logging and validating runners' activities by syncing there data through the most popular app called [STRAVA](https://www.strava.com/).
 
 I love this kind of work. I enjoyed doing this - coding for more than 12 hours a day is no problem to me. For I am passionate with this I am sure I'll excel in this field.
 
