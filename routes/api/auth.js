@@ -201,24 +201,18 @@ router.post('/forgotpassword', async (req, res) => {
                 },
               });
 
+              console.log(process.env.CLIENT_URL);
+
               const emailData = {
                 from: process.env.GOOGLE_EMAIL,
                 to: email,
                 subject: `Password Reset link`,
                 html: `
                       <h1>Please use the following link to reset your password</h1>
-                      <p>${
-                        process.env.NODE_ENV === 'development'
-                          ? process.env.CLIENT_URL
-                          : process.env.PORT
-                      }/reset-password/${token}</p>
+                      <p>${process.env.CLIENT_URL}/reset-password/${token}</p>
                       <hr />
                       <p>This email may contain sensitive information</p>
-                      <p>${
-                        process.env.NODE_ENV === 'development'
-                          ? process.env.CLIENT_URL
-                          : process.env.PORT
-                      }</p>
+                      <p>${process.env.CLIENT_URL}</p>
                   `,
               };
               transporter.sendMail(emailData, function (error, info) {

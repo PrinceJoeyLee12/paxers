@@ -69,6 +69,7 @@ export const getUpcomingEventByTransactionId = (
       data: { categorySelected },
       dateRegistered,
     } = res.data;
+    console.log(process.env.REACT_APP_CLIENT_URL);
     dispatch({
       type: SET_ROW_SELECTED,
       payload: {
