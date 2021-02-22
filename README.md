@@ -16,6 +16,21 @@ SECRET_KEY = "mysecret"
 REGISTRATION_EXPIRATION=2
 ```
 
+### add a ".env" file in to client/src folder
+
+```js
+REACT_APP_GOOGLE_CLIENT_ID='<your_google_client_id>'
+REACT_APP_BRAND_NAME='Paxers'
+REACT_APP_DRAWER_WIDTH=240
+REACT_APP_CLIENT_URL='http://localhost:3000'
+#used for storing photos
+REACT_APP_API_BASE_URL='<your_cloudinary_api_base_url>'
+
+#create a two upload present in your cloudinary account one for receipt and the other for profiles make sure to make it unsigned so that everybody can upload
+REACT_APP_UPLOAD_PRESENT_RECEIPTS='<upload_present _for_receipt>'
+REACT_APP_UPLOAD_PRESENT_PROFILE='<upload_present _for_profiles>'
+```
+
 ### Install client dependencies
 
 ```bash
@@ -70,20 +85,20 @@ Check in browser on [http://localhost:5000/](http://localhost:5000/)
 
 ## My pursuit as a Web developer
 
-I already love programming with C arduino and C# during my college days but I was held up by what others say to me like "it's to hard for you to do it and so on..." and because of it my fear grows to not do it. But luckily I got out from nay sayers by changing my mindset through reading a tons of books and listening to few motivators out there. And when pandemic happens I had the opportunity and the time to do it.
+I already love programming with C arduino and C# during my college days but I was held up by what others say to me like "it's to hard for you to do it and so on..." and because of it my fear grows to not do so. But luckily I got out from nay sayers possibly by changing my mindset through reading a tons of books and listening to few motivators out there. And when pandemic happens I had the opportunity and the time to do it.
 
-I decided to build a project that is a problem-solving one and that really matters to me and to the world rather than building small application that don't really matters or solve problem. As you can see this is my first repository in GITHUB.
+I decided to build a project that is a problem-solving and that really matters to me and to the world rather than building small application that don't really matter or solve a problem. As you can see this is my first repository in GITHUB.
 
 I am a runner, an elite runner, and I saw a pain-point to my field where organizers want to make an event (e.g. virtual race) where data are log manually, meaning by hand/through excel.
 And through this website they can manage and fully automate the work of logging and validating runners' activities by syncing there data through the most popular app called [STRAVA](https://www.strava.com/).
 
-I love this kind of work. I enjoyed doing this - coding for more than 12 hours a day is no problem to me. For I am passionate with this I am sure I'll excel in this field.
+I love this kind of work. I enjoyed doing this - coding for more than 12 hours a day is a no problem to me. For I am passionate with it I am sure I'll excel in this field.
 
 ## Goals for this project
 
 I have 2 main goals in making this project
 
-1. To showcase this as my experience for web development to the organization I am going to apply
+1. To showcase this as my experience for fullstack web development to the organization I am want to be part with.
 
 2. To get this out to the market
 
@@ -91,16 +106,16 @@ I have 2 main goals in making this project
 
 I divided the project into TWO audience
 
-1.  For the Runners
+1.  For Runners
 2.  For Organizers
 
 ### For Runners (40% done)
 
-1.  Changing UI (for I suck at ui designing I decided to buy a ready made theme and customize it as much as possible with my needs)
-2.  I will implement the notification function in AZURE (signalR) and with EVENT GRID (But don't have credit card yet which they require in making my account). In advance I just studied the modules for it
-3.  Authenticating and syncing activities data with STRAVA
+1.  Changing UI (for I suck and don't have the eye in designing. So I decided to buy a ready made theme and customize it as much as possible with my needs) or maybe I'll hire someone to have ui/ux design for me
+2.  I will implement the notification function in AZURE (signalR) and with EVENT GRID (But don't have credit card yet which they require in making my account). In advance I just studied the modules for it.
+3.  Authenticating and syncing activities data with [STRAVA](https://www.strava.com/).
 4.  Having a calendar for activities
-5.  Error handling
+5.  Standardize Error handling
 
 ### For Organizers (0% done)
 
