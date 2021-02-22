@@ -14,13 +14,6 @@ SECRET_KEY = "mysecret"
 #this will be configure soon stores in Event "paymentExpiresIn" Model
 #this example represents one day
 REGISTRATION_EXPIRATION=2
-
-#for uploading photos to cloundinary.com
-#You can have this two below skipped for I set my api_base_url and
-#upload_preset to my client for uploading photos and I made it public (I know
-#this is a bad habit, but this is for the sake of quick start)
-API_BASE_URL="<your_cloudinary_api_base_url>"
-UPLOAD_PRESENT="<your_upload_present_for_cloudinary>"
 ```
 
 ### Install client dependencies
