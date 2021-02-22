@@ -83,17 +83,6 @@ node server.js
 
 Check in browser on [http://localhost:5000/](http://localhost:5000/)
 
-## My pursuit as a Web developer
-
-I already love programming with C arduino and C# during my college days but I was held up by what others say to me like "it's to hard for you to do it and so on..." and because of it my fear grows to not do so. But luckily I got out from nay sayers possibly by changing my mindset through reading a tons of books and listening to few motivators out there. And when pandemic happens I had the opportunity and the time to do it.
-
-I decided to build a project that is a problem-solving and that really matters to me and to the world rather than building small application that don't really matter or solve a problem. As you can see this is my first repository in GITHUB.
-
-I am a runner, an elite runner, and I saw a pain-point to my field where organizers want to make an event (e.g. virtual race) where data are log manually, meaning by hand/through excel.
-And through this website they can manage and fully automate the work of logging and validating runners' activities by syncing there data through the most popular app called [STRAVA](https://www.strava.com/).
-
-I love this kind of work. I enjoyed doing this - coding for more than 12 hours a day is a no problem to me. For I am passionate with it I am sure I'll excel in this field.
-
 ## Goals for this project
 
 I have 2 main goals in making this project
@@ -120,6 +109,17 @@ I divided the project into TWO audience
 ### For Organizers (0% done)
 
 1.  I'll figure out soon what would be the MVP for them
+
+## My pursuit as a Web developer
+
+I already love programming with C arduino and C# during my college days but I was held up by what others say to me like "it's to hard for you to do it and so on..." and because of it my fear grows to not do so. But luckily I got out from nay sayers possibly by changing my mindset through reading a tons of books and listening to few motivators out there. And when pandemic happens I had the opportunity and the time to do it.
+
+I decided to build a project that is a problem-solving and that really matters to me and to the world rather than building small application that don't really matter or solve a problem. As you can see this is my first repository in GITHUB.
+
+I am a runner, an elite runner, and I saw a pain-point to my field where organizers want to make an event (e.g. virtual race) where data are log manually, meaning by hand/through excel.
+And through this website they can manage and fully automate the work of logging and validating runners' activities by syncing there data through the most popular app called [STRAVA](https://www.strava.com/).
+
+I love this kind of work. I enjoyed doing this - coding for more than 12 hours a day is a no problem to me. For I am passionate with it I am sure I'll excel in this field.
 
 ## Acknowledgment
 
