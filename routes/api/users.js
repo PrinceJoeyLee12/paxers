@@ -355,6 +355,7 @@ router.post(
         };
         transporter.sendMail(emailData, async function (error, info) {
           if (error) {
+            console.log(error);
             return res.status(500).json({
               msg: `Cannot send link to ${email}. There's a failure in our side.`,
             });

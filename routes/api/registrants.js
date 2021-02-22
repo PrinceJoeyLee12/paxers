@@ -95,17 +95,13 @@ router.post(
                 }</p>
                 <p>Transaction ID :  ${transactionId}</p>
                 <p><h3>Here's your link:  <a href='${
-                  process.env.NODE_ENV === 'development'
-                    ? process.env.CLIENT_URL
-                    : process.env.PORT
+                  process.env.CLIENT_URL
                 }/${charReplacer(
             eventTitle,
             ' ',
             '-',
           ).toLowerCase()}/registration/${userId}/${transactionId}'>${
-            process.env.NODE_ENV === 'development'
-              ? process.env.CLIENT_URL
-              : process.env.PORT
+            process.env.CLIENT_URL
           }/${charReplacer(
             eventTitle,
             ' ',
