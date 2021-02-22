@@ -64,8 +64,9 @@ const Profile = ({
     <>
       <Box zIndex='tooltip'>
         <Popper
+          id={profile ? 'list-grow' : undefined}
           open={openProfile}
-          anchorEl={profile ? profile : ''}
+          anchorEl={profile ? profile : null}
           role={undefined}
           transition
           className={classes.popper}

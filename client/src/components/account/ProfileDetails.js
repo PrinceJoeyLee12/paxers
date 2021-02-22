@@ -123,7 +123,7 @@ const ProfileDetails = ({
   updateUserProfileDetails,
   getCountryProperties,
   setBackdropLoading,
-  clearCities,
+  clearSelectedCountryProps,
   ...rest
 }) => {
   const classes = useStyles();
