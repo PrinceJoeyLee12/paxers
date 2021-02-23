@@ -363,7 +363,6 @@ router.post(
             // Hash password before saving in database
             const salt = await bcrypt.genSalt(10);
             password = await bcrypt.hash(tempPasswordGenerator, salt);
-            console.log(`Password salt: ${password}`);
 
             await User.findOneAndUpdate(
               { _id: req.params.userId },

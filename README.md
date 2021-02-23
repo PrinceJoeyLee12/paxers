@@ -10,6 +10,8 @@ Is web app for runners and event makers
 CLIENT_URL = http://localhost:3000
 MONGO_URI='<your_mongoDB_Atlas_uri_with_credentials>'
 SECRET_KEY = "mysecret"
+GOOGLE_EMAIL="<your_google_mail>@gmail.com"
+GOOGLE_EMAIL_PASS='<your_google_account_password>'
 
 #this will be configure soon stores in Event "paymentExpiresIn" Model
 #this example represents one day
