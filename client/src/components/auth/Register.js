@@ -66,6 +66,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
     color: 'white',
     width: '100%',
+    '& :hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
+    '& .MuiButton-root:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
   FormControl: {
     width: '100%',
@@ -273,14 +279,18 @@ const Register = ({ isAuthenticated, register, google }) => {
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               onSuccess={googleResponse}
               onFailure={googleResponse}
+              className={classes.googleButton}
               cookiePolicy={'single_host_origin'}
               render={renderProps => (
                 <Button
                   onClick={renderProps.onClick}
                   disabled={renderProps.disabled}
                   className={classes.googleButton}>
-                  <i className='fab fa-google' />
-                  <Typography>Google Sign Up</Typography>
+                  <i
+                    className='fab fa-google'
+                    style={{ paddingRight: '10px' }}
+                  />
+                  <Typography>Sign Up with Google</Typography>
                 </Button>
               )}
             />

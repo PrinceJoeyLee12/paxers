@@ -2,13 +2,12 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { GoogleLogin } from 'react-google-login';
 
 import { login, google } from '../../actions/auth';
 import { setDialog } from '../../actions/alert';
-
-import { ToastContainer } from 'react-toastify';
 
 //footer
 import Footer from '../layouts/Footer';
@@ -67,6 +66,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
     color: 'white',
     width: '100%',
+    '& :hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
+    '& .MuiButton-root:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 }));
 
@@ -109,6 +114,11 @@ const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
       const { email, familyName, givenName, imageUrl } = response.profileObj;
       google({ familyName, givenName, email, imageUrl }, handleErrors);
     }
+  };
+
+  //handle on google error authenticating
+  const googleFailure = () => {
+    toast.error('Error on authenticating with GOOGLE. Please try other way.');
   };
 
   const handleSubmit = e => {
@@ -208,14 +218,18 @@ const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               onSuccess={googleResponse}
-              onFailure={googleResponse}
+              onFailure={googleFailure}
+              className={classes.googleButton}
               cookiePolicy={'single_host_origin'}
               render={renderProps => (
                 <Button
                   onClick={renderProps.onClick}
                   disabled={renderProps.disabled}
                   className={classes.googleButton}>
-                  <i className='fab fa-google' />
+                  <i
+                    className='fab fa-google'
+                    style={{ paddingRight: '10px' }}
+                  />
                   <Typography>Google Sign In</Typography>
                 </Button>
               )}
