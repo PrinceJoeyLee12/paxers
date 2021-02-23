@@ -128,6 +128,7 @@ const Profile = ({
           }
         })
         .catch(err => {
+          console.log(err);
           toast.error(
             "There's something wrong saving your picture. Please try again later",
           );
