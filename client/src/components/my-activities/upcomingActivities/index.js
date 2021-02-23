@@ -72,7 +72,7 @@ const UpcomingActivities = ({
           transactionId: `${activity.transactionId}`,
           paymentImage: `${activity.paymentImage}`,
           status: `${activity.status}`,
-          link: `${process.env.REACT_APP_CLIENT_URL}/${charReplacer(
+          link: `${window.location.origin}/${charReplacer(
             activity.event.title,
             ' ',
             '-',

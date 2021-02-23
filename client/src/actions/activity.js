@@ -69,7 +69,7 @@ export const getUpcomingEventByTransactionId = (
       data: { categorySelected },
       dateRegistered,
     } = res.data;
-    console.log(process.env.REACT_APP_CLIENT_URL);
+    console.log(window.location.origin);
     dispatch({
       type: SET_ROW_SELECTED,
       payload: {
@@ -94,7 +94,7 @@ export const getUpcomingEventByTransactionId = (
         amountToPay: `₱ ${amountToPay}`,
         transactionId: `${transactionId}`,
         status: `${status}`,
-        link: `${process.env.REACT_APP_CLIENT_URL}/${charReplacer(
+        link: `${window.location.origin}/${charReplacer(
           title,
           ' ',
           '-',

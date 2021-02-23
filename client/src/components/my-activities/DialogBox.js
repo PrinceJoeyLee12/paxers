@@ -147,7 +147,7 @@ const DialogBox = ({ rowSelected, removeRowSelected, history }) => {
                       onClick={() => {
                         history.push(
                           `${`${data.link}`.slice(
-                            process.env.REACT_APP_CLIENT_URL.length,
+                            window.location.origin.length,
                           )}`,
                         );
                       }}
