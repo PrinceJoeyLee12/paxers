@@ -5,7 +5,6 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const normalizeUrl = require('normalize-url');
 const nodemailer = require('nodemailer');
-const cloudinary = require('cloudinary').v2;
 //utils
 const passwordGenerator = require('../../utils/passwordGenerator');
 
@@ -18,9 +17,11 @@ const {
   validateChangePasswordInput,
 } = require('../../helpers/resetPasswordValidate');
 
+//middleware
 const checkObjectId = require('../../middleware/checkObjectId');
 const { headerCheckTokenMiddleware } = require('../../middleware/auth');
 const validateProfileDetailsInput = require('../../helpers/updateProfileValidate');
+const parser = require('../../middleware/cloudinary.config');
 
 // @route      POST api/user/register
 // @desc       Register new user
@@ -88,58 +89,42 @@ router.post('/register', async (req, res) => {
 // @access     public
 router.post(
   '/update-user-profile-picture/:userId',
-  [headerCheckTokenMiddleware, checkObjectId('userId')],
+  [headerCheckTokenMiddleware, checkObjectId('userId'), parser.single('image')],
   async (req, res) => {
-    const { file } = req.body;
     try {
       const user = await User.findById(req.params.userId);
 
       if (!user)
         return res.status(404).json({ msg: 'Request denied, user not found' });
 
-      if (!file)
-        return res
-          .status(404)
-          .json({ msg: 'Request denied, file should not be empty' });
-
-      console.log(file);
-      cloudinary.image(file, {
-        secure: true,
-        transformation: [{ width: 200, height: 200 }],
-      });
-
-      //Upload file to cloudinary
-      cloudinary.uploader.upload(file, (error, result) => {
-        if (error) {
-          console.log(error);
-          return res.status(400).json({
-            msg:
-              "There's something wrong saving your picture. Please try again later",
-          });
-        }
+      const { _id } = user;
+      //Upload file to database
+      if (req.file.path) {
         try {
           // Using upsert option (creates new doc if no match is found):
-          console.log(result);
-          const image = normalizeUrl(result.secure_url, {
+          const image = normalizeUrl(req.file.path, {
             forceHttps: true,
           });
-          async () => {
-            let updatedUser = await User.findOneAndUpdate(
-              { _id },
-              { image },
-              { new: true, upsert: true, setDefaultsOnInsert: true },
-            );
-            console.log(updatedUser);
-            res.json({ msg: 'Successfully Changed', user: updatedUser });
-          };
+          let updatedUser = await User.findOneAndUpdate(
+            { _id },
+            { image },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+          );
+          console.log(updatedUser);
+          res.json({ msg: 'Successfully Changed', user: updatedUser });
         } catch (err) {
-          console.error(err.message);
+          console.error(err);
           return res.status(400).json({
             msg:
               "There's something wrong saving your picture. Please try again later",
           });
         }
-      });
+      } else {
+        return res.status(400).json({
+          msg:
+            "There's something wrong saving your picture. Please try again later",
+        });
+      }
     } catch (err) {
       console.log(err);
       res.json({

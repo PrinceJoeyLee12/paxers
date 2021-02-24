@@ -82,7 +82,7 @@ const Profile = ({
 
   const handleChange = event => {
     setUploadImage({
-      file: event.target.files[0].name,
+      file: event.target.files[0],
       filePath: URL.createObjectURL(event.target.files[0]),
     });
   };
@@ -116,9 +116,10 @@ const Profile = ({
   const handleSubmit = async () => {
     if (!isLoading && !success) {
       setIsLoading(true);
-      console.log(filePath);
-      console.log(file);
-      updateUserProfilePicture({ file }, _id, handleResponse);
+
+      const formData = new FormData();
+      formData.append('image', file);
+      updateUserProfilePicture(formData, _id, handleResponse);
     }
   };
 

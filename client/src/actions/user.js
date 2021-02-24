@@ -5,15 +5,14 @@ import { UPDATE_USER, SET_DISTANCE_TYPE } from './types';
 // @desc     Update user's Profile Picture
 // @access   Private
 export const updateUserProfilePicture = (
-  file,
+  formData,
   userId,
   handleResponse,
 ) => async dispatch => {
   try {
     const res = await api.post(
       `/user/update-user-profile-picture/${userId}`,
-      file,
-      handleResponse,
+      formData,
     );
     console.log(res.data.msg);
     console.log(res.data.user);
