@@ -67,12 +67,12 @@ const Notifications = ({ notifications, setNotifications }) => {
                     <ListItem alignItems='flex-start'>
                       <ListItemAvatar>
                         <Avatar
-                          alt='Remy Sharp'
-                          src='/static/images/avatar/1.jpg'
+                          alt='Event 1'
+                          src='https://res.cloudinary.com/paxers/image/upload/v1614074468/events/event1_stawme.png'
                         />
                       </ListItemAvatar>
                       <ListItemText
-                        primary='Brunch this weekend?'
+                        primary='Reservation Updated'
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -83,7 +83,7 @@ const Notifications = ({ notifications, setNotifications }) => {
                               Ali Connors
                             </Typography>
                             {
-                              " — I'll be in your neighborhood doing errands this…"
+                              ' Your reservation is confirmed please check your email for instructions…'
                             }
                           </React.Fragment>
                         }
@@ -93,12 +93,12 @@ const Notifications = ({ notifications, setNotifications }) => {
                     <ListItem alignItems='flex-start'>
                       <ListItemAvatar>
                         <Avatar
-                          alt='Travis Howard'
-                          src='/static/images/avatar/2.jpg'
+                          alt='Event 1 Medal'
+                          src='https://res.cloudinary.com/paxers/image/upload/v1614077403/events/event1-5km-medal_yax5db.png'
                         />
                       </ListItemAvatar>
                       <ListItemText
-                        primary='Summer BBQ'
+                        primary='Congratulations!!!'
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -108,7 +108,7 @@ const Notifications = ({ notifications, setNotifications }) => {
                               color='textPrimary'>
                               to Scott, Alex, Jennifer
                             </Typography>
-                            {" — Wish I could come, but I'm out of town this…"}
+                            {" — You've earned your first medal for this year…"}
                           </React.Fragment>
                         }
                       />
@@ -118,11 +118,11 @@ const Notifications = ({ notifications, setNotifications }) => {
                       <ListItemAvatar>
                         <Avatar
                           alt='Cindy Baker'
-                          src='/static/images/avatar/3.jpg'
+                          src='https://res.cloudinary.com/paxers/image/upload/v1613566993/paxers-profile-images/whlgc2hky9qrgzsrw595.jpg'
                         />
                       </ListItemAvatar>
                       <ListItemText
-                        primary='Oui Oui'
+                        primary='Cindy Baker Like you activity'
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -132,9 +132,7 @@ const Notifications = ({ notifications, setNotifications }) => {
                               color='textPrimary'>
                               Sandra Adams
                             </Typography>
-                            {
-                              ' — Do you have Paris recommendations? Have you ever…'
-                            }
+                            {' — Check it out…'}
                           </React.Fragment>
                         }
                       />

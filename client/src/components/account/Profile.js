@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 
 //actions
 import { updateUserProfilePicture } from '../../actions/user';
@@ -83,7 +82,7 @@ const Profile = ({
 
   const handleChange = event => {
     setUploadImage({
-      file: event.target.files[0],
+      file: event.target.files[0].name,
       filePath: URL.createObjectURL(event.target.files[0]),
     });
   };
@@ -97,48 +96,29 @@ const Profile = ({
     setSuccess(false);
   };
 
-  const handleResponse = () => {
-    setSuccess(true);
+  const handleResponse = (msg, status) => {
     setIsLoading(false);
-    setUploadImage({
-      file: '',
-      filePath: '',
-    });
-    timer.current = window.setTimeout(() => {
+    toast[`${status === 200 ? 'success' : 'error'}`](msg);
+    if (status === 200) {
+      setSuccess(true);
+      setUploadImage({
+        file: '',
+        filePath: '',
+      });
+      timer.current = window.setTimeout(() => {
+        setSuccess(false);
+      }, 5000);
+    } else {
       setSuccess(false);
-    }, 5000);
+    }
   };
 
   const handleSubmit = async () => {
     if (!isLoading && !success) {
       setIsLoading(true);
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append(
-        'upload_preset',
-        process.env.REACT_APP_UPLOAD_PRESENT_PROFILE,
-      );
-      //save image to cloudinary
-      await axios
-        .post(process.env.REACT_APP_API_BASE_URL, formData)
-        .then(res => {
-          if (res.data.secure_url) {
-            handleResponse();
-            updateUserProfilePicture({ image: res.data.secure_url }, _id);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          toast.error(
-            "There's something wrong saving your picture. Please try again later",
-          );
-          setSuccess(false);
-          setIsLoading(false);
-          setUploadImage({
-            file: '',
-            filePath: '',
-          });
-        });
+      console.log(filePath);
+      console.log(file);
+      updateUserProfilePicture({ file }, _id, handleResponse);
     }
   };
 

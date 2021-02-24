@@ -5,25 +5,29 @@ import { UPDATE_USER, SET_DISTANCE_TYPE } from './types';
 // @desc     Update user's Profile Picture
 // @access   Private
 export const updateUserProfilePicture = (
-  formData,
+  file,
   userId,
+  handleResponse,
 ) => async dispatch => {
   try {
     const res = await api.post(
       `/user/update-user-profile-picture/${userId}`,
-      formData,
+      file,
+      handleResponse,
     );
-    console.log(res.data);
+    console.log(res.data.msg);
+    console.log(res.data.user);
 
+    handleResponse(res.data.msg, res.status);
     dispatch({
       type: UPDATE_USER,
-      payload: res.data,
+      payload: res.data.user,
     });
   } catch (err) {
-    if (typeof err.response !== 'undefined') {
+    if (err.response) {
       if ('data' in err.response) {
         console.log(err.response.data.msg);
-        return;
+        handleResponse(err.response.data.msg, err.status);
       }
     }
     console.log(err);

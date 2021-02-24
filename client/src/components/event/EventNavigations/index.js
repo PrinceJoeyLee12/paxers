@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
+    marginBottom: '50px',
     //  backgroundColor: theme.palette.background.paper,
   },
   appbar: {

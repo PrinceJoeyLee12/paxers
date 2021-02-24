@@ -5,6 +5,7 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const normalizeUrl = require('normalize-url');
 const nodemailer = require('nodemailer');
+const cloudinary = require('cloudinary').v2;
 //utils
 const passwordGenerator = require('../../utils/passwordGenerator');
 
@@ -89,51 +90,56 @@ router.post(
   '/update-user-profile-picture/:userId',
   [headerCheckTokenMiddleware, checkObjectId('userId')],
   async (req, res) => {
-    const { image } = req.body;
+    const { file } = req.body;
     try {
       const user = await User.findById(req.params.userId);
 
       if (!user)
         return res.status(404).json({ msg: 'Request denied, user not found' });
-      console.log(user);
 
-      const {
-        preferredMeasurementIsMetric,
-        _id,
-        firstName,
-        lastName,
-        email,
-        password,
-        eventsLiked,
-        personalRecords,
-        createAt,
-      } = user;
+      if (!file)
+        return res
+          .status(404)
+          .json({ msg: 'Request denied, file should not be empty' });
 
-      const toUpdateUser = {
-        preferredMeasurementIsMetric,
-        firstName,
-        lastName,
-        email,
-        image,
-        password,
-        eventsLiked,
-        personalRecords,
-        createAt,
-      };
-      toUpdateUser.image = normalizeUrl(image, { forceHttps: true });
+      console.log(file);
+      cloudinary.image(file, {
+        secure: true,
+        transformation: [{ width: 200, height: 200 }],
+      });
 
-      try {
-        // Using upsert option (creates new doc if no match is found):
-        let updatedUser = await User.findOneAndUpdate(
-          { _id },
-          { $set: toUpdateUser },
-          { new: true, upsert: true, setDefaultsOnInsert: true },
-        );
-        res.json(updatedUser);
-      } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-      }
+      //Upload file to cloudinary
+      cloudinary.uploader.upload(file, (error, result) => {
+        if (error) {
+          console.log(error);
+          return res.status(400).json({
+            msg:
+              "There's something wrong saving your picture. Please try again later",
+          });
+        }
+        try {
+          // Using upsert option (creates new doc if no match is found):
+          console.log(result);
+          const image = normalizeUrl(result.secure_url, {
+            forceHttps: true,
+          });
+          async () => {
+            let updatedUser = await User.findOneAndUpdate(
+              { _id },
+              { image },
+              { new: true, upsert: true, setDefaultsOnInsert: true },
+            );
+            console.log(updatedUser);
+            res.json({ msg: 'Successfully Changed', user: updatedUser });
+          };
+        } catch (err) {
+          console.error(err.message);
+          return res.status(400).json({
+            msg:
+              "There's something wrong saving your picture. Please try again later",
+          });
+        }
+      });
     } catch (err) {
       console.log(err);
       res.json({

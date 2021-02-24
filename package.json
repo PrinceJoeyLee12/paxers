@@ -17,6 +17,7 @@
     "@material-ui/styles": "^4.11.1",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.25.0",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "datejs": "^1.0.0-rc3",
