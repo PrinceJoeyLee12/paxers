@@ -7,6 +7,7 @@ import Landing from '../layouts/Landing';
 import ThankYouPage from '../layouts/ThankYouPage';
 import ContactUs from '../ContactUs';
 import Dashboard from '../dashboard/Dashboard';
+import TokenPage from '../layouts/TokenPage';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
 import ForgotPassword from '../auth/ForgotPassword';
@@ -53,6 +54,8 @@ const Routes = props => {
           <Route exact path='/login' component={Login} />
           <Route exact path='/forgot-password' component={ForgotPassword} />
           <Route exact path='/event/:title/:id' component={Event} />
+          <Route exact path='/auth/:token' component={TokenPage} />
+          <Route exact path='/contact-us' component={ContactUs} />
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
           <PrivateRoute exact path='/form/:title/:id' component={EventForm} />
           <PrivateRoute exact path='/payment/:title/:id' component={Payment} />
@@ -69,7 +72,6 @@ const Routes = props => {
           />
           <PrivateRoute exact path='/settings' component={Settings} />
           <PrivateRoute exact path='/account/me' component={Account} />
-          <Route exact path='/contact-us' component={ContactUs} />
           <Route exact path='/create-event' component={CreateEvent} />
           <PrivateRoute
             exact

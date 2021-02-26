@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const router = express.Router();
 const normalizeUrl = require('normalize-url');
+const passport = require('passport');
 
 const {
   headerCheckTokenMiddleware,
@@ -16,7 +17,6 @@ const {
   validateResetPasswordEmailInput,
   validateResetPasswordInput,
 } = require('../../helpers/resetPasswordValidate');
-const { truncate } = require('lodash');
 
 // @route    GET api/auth
 // @desc     Get user by token
@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
       jwt.sign(
         payload,
         process.env.SECRET_KEY,
-        { expiresIn: '5 days' },
+        { expiresIn: process.env.TOKEN_EXPIRATION },
         (err, token) => {
           if (err)
             return res
@@ -82,11 +82,48 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
+);
+
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    console.log(req.user._id);
+    try {
+      const payload = {
+        user: {
+          id: req.user._id,
+        },
+      };
+      jwt.sign(
+        payload,
+        process.env.SECRET_KEY,
+        { expiresIn: process.env.TOKEN_EXPIRATION },
+        (err, token) => {
+          if (err) {
+            return res.redirect('/login');
+          }
+          // console.log(req.headers.host);
+          // res.redirect(`${req.headers.host}/${token}`); //upon deploying to the heroku I can opt to this option
+          res.redirect(`${process.env.CLIENT_URL}/auth/${token}`);
+        },
+      );
+    } catch (err) {
+      console.log(err);
+      res.redirect('/login');
+    }
+  },
+);
+
 // @route     POST /auth/google
 // @desc      Auth with Google
 // @access     public
 router.post('/google', async (req, res) => {
   const { email, firstName, lastName, image } = req.body;
+
   let user = await User.findOne({ email });
 
   if (user) {
@@ -99,7 +136,7 @@ router.post('/google', async (req, res) => {
       jwt.sign(
         payload,
         process.env.SECRET_KEY,
-        { expiresIn: '5 days' },
+        { expiresIn: process.env.TOKEN_EXPIRATION },
         (err, token) => {
           if (err) {
             return res
@@ -140,7 +177,7 @@ router.post('/google', async (req, res) => {
       jwt.sign(
         payload,
         process.env.SECRET_KEY,
-        { expiresIn: '5 days' },
+        { expiresIn: process.env.TOKEN_EXPIRATION },
         (err, token) => {
           console.log(err);
           if (err)

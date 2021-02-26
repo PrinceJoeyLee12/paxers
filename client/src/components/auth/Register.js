@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import { GoogleLogin } from 'react-google-login';
 
-import { register, google } from '../../actions/auth';
+import { register, googleSignIn } from '../../actions/auth';
 import { ToastContainer } from 'react-toastify';
 
 //footer
@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Register = ({ isAuthenticated, register, google }) => {
+const Register = ({ isAuthenticated, register, googleSignIn }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -130,7 +130,7 @@ const Register = ({ isAuthenticated, register, google }) => {
 
   const googleResponse = response => {
     const { email, familyName, givenName, imageUrl } = response.profileObj;
-    google({ familyName, givenName, email, imageUrl }, setErrors);
+    googleSignIn({ familyName, givenName, email, imageUrl }, setErrors);
   };
 
   const handleSubmit = e => {
@@ -313,7 +313,7 @@ const Register = ({ isAuthenticated, register, google }) => {
 
 Register.propTypes = {
   register: PropTypes.func,
-  google: PropTypes.func,
+  googleSignIn: PropTypes.func,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -321,4 +321,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { register, google })(Register);
+export default connect(mapStateToProps, { register, googleSignIn })(Register);

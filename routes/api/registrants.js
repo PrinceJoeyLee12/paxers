@@ -12,6 +12,7 @@ const User = require('../../models/User');
 //Middleware
 const { headerCheckTokenMiddleware } = require('../../middleware/auth');
 const checkObjectId = require('../../middleware/checkObjectId');
+const parser = require('../../middleware/cloudinary.config');
 
 //helpers
 const { charReplacer } = require('../../helpers/textFormater');
@@ -172,50 +173,53 @@ router.get(
 // @access     private
 router.post(
   '/upload-receipt-image/:registrantsId',
-  checkObjectId('registrantsId'),
+  [checkObjectId('registrantsId'), parser.single('image')],
   async (req, res) => {
-    const { paymentImage } = req.body;
-    console.log(paymentImage);
     try {
-      const registrant = await Registrant.findById(req.params.registrantsId);
-      console.log(registrant);
       //deconstructing registrant (response)
-      const {
-        _id,
-        event,
-        userId,
-        transactionId,
-        status,
-        payment: { payThrough, amountToPay, timeToExpire },
-        data,
-        dateRegistered,
-      } = registrant;
-      const newRegistrantsInfo = {
-        event,
-        userId,
-        transactionId,
-        status: 'in-review',
-        paymentImage: normalizeUrl(paymentImage, { forceHttps: true }),
-        payment: {
-          payThrough,
-          amountToPay,
-          timeToExpire,
-          datePaymentProcessed: moment(),
-        },
-        data,
-        dateRegistered,
-      };
-      //save or update a registrant
-      let saveUpdatedRegistrant = await Registrant.findOneAndUpdate(
-        { userId, _id },
-        { $set: newRegistrantsInfo },
-        { new: true, upsert: true, setDefaultsOnInsert: true },
-      );
-      console.log(saveUpdatedRegistrant);
-      res.json({
-        msg: 'Image was successfully saved to our database.',
-        newRegistrantData: saveUpdatedRegistrant,
-      });
+      if (req.file.path) {
+        const registrant = await Registrant.findById(req.params.registrantsId);
+        const {
+          _id,
+          event,
+          userId,
+          transactionId,
+          status,
+          payment: { payThrough, amountToPay, timeToExpire },
+          data,
+          dateRegistered,
+        } = registrant;
+        const newRegistrantsInfo = {
+          event,
+          userId,
+          transactionId,
+          status: 'in-review',
+          paymentImage: normalizeUrl(req.file.path, { forceHttps: true }),
+          payment: {
+            payThrough,
+            amountToPay,
+            timeToExpire,
+            datePaymentProcessed: moment(),
+          },
+          data,
+          dateRegistered,
+        };
+        //save or update a registrant
+        let saveUpdatedRegistrant = await Registrant.findOneAndUpdate(
+          { userId, _id },
+          { $set: newRegistrantsInfo },
+          { new: true, upsert: true, setDefaultsOnInsert: true },
+        );
+        console.log(saveUpdatedRegistrant);
+        res.json({
+          msg: 'Image was successfully saved to our database.',
+          newRegistrantData: saveUpdatedRegistrant,
+        });
+      } else {
+        res.status(400).json({
+          msg: `We can't upload your file as of this moment. Please try again`,
+        });
+      }
     } catch (err) {
       console.log(err);
       res.json({ msg: `Error on saving picture. Please try again` });

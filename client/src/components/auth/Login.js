@@ -3,10 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
-import { GoogleLogin } from 'react-google-login';
-
-import { login, google } from '../../actions/auth';
+import { login, googleSignIn } from '../../actions/auth';
 import { setDialog } from '../../actions/alert';
 
 //footer
@@ -62,20 +61,16 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   googleButton: {
-    margin: theme.spacing(-1, 0, 2),
-    backgroundColor: theme.palette.secondary.main,
-    color: 'white',
-    width: '100%',
-    '& :hover': {
-      backgroundColor: theme.palette.secondary.main,
-    },
-    '& .MuiButton-root:hover': {
-      backgroundColor: theme.palette.secondary.main,
-    },
+    marginBottom: theme.spacing(2),
   },
 }));
 
-const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
+const Login = ({
+  auth: { isAuthenticated },
+  login,
+  googleSignIn,
+  setDialog,
+}) => {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     email: '',
@@ -109,16 +104,12 @@ const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
     setErrors(errorsFromBack);
   };
 
-  const googleResponse = response => {
-    if (response.profileObj !== undefined) {
-      const { email, familyName, givenName, imageUrl } = response.profileObj;
-      google({ familyName, givenName, email, imageUrl }, handleErrors);
-    }
+  const handleResponse = (msg, status) => {
+    toast[`${status === 200 ? 'success' : 'error'}`](msg);
   };
 
-  //handle on google error authenticating
-  const googleFailure = () => {
-    toast.error('Error on authenticating with GOOGLE. Please try other way.');
+  const handleGoogleSignIn = async () => {
+    googleSignIn(handleResponse);
   };
 
   const handleSubmit = e => {
@@ -215,7 +206,7 @@ const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
               className={classes.submit}>
               {textChange}
             </Button>
-            <GoogleLogin
+            {/* <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               onSuccess={googleResponse}
               onFailure={googleFailure}
@@ -233,20 +224,32 @@ const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
                   <Typography>Google Sign In</Typography>
                 </Button>
               )}
-            />
-            <Grid container>
-              <Grid item xs>
-                <Link href='/forgot-password' variant='body2'>
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href='/register' variant='body2'>
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            /> */}
           </form>
+          <a href='http://localhost:5000/api/auth/google'>
+            <Button
+              fullWidth
+              variant='contained'
+              color='secondary'
+              className={classes.googleButton}
+              // onClick={handleGoogleSignIn}
+            >
+              <i className='fab fa-google' style={{ paddingRight: '10px' }} />
+              Login with Google
+            </Button>
+          </a>
+          <Grid container>
+            <Grid item xs>
+              <Link href='/forgot-password' variant='body2'>
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href='/register' variant='body2'>
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
         </div>
         <Box mt={8}>
           <Footer />
@@ -258,7 +261,7 @@ const Login = ({ auth: { isAuthenticated }, login, google, setDialog }) => {
 
 Login.propTypes = {
   login: PropTypes.func,
-  google: PropTypes.func,
+  googleSignIn: PropTypes.func,
   setDialog: PropTypes.func,
   isAuthenticated: PropTypes.bool,
 };
@@ -269,6 +272,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   login,
-  google,
+  googleSignIn,
   setDialog,
 })(Login);

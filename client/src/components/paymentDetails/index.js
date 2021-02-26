@@ -91,11 +91,12 @@ const RegistrationStatus = ({
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [image, setImage] = useState({
-    imagePath: '',
-    imageName: '',
+    file: '',
+    fileName: '',
+    filePath: '',
   });
 
-  const { imagePath, imageName } = image;
+  const { file, fileName, filePath } = image;
   useEffect(() => {
     if (Object.keys(rowSelected).length === 0)
       //if link comes from somewhere else where selectedRow from redux activity state is empty
@@ -104,7 +105,7 @@ const RegistrationStatus = ({
         match.params.transactionId,
       );
     else {
-      setImage({ ...image, imagePath: rowSelected.paymentImage });
+      setImage({ ...image, filePath: rowSelected.paymentImage });
       setReadyToView(true);
     }
     // eslint-disable-next-line
@@ -116,20 +117,29 @@ const RegistrationStatus = ({
   ]);
 
   const handleChange = event => {
-    setImage({
-      imagePath: event.target.files[0],
-      imageName: event.target.files[0].name,
-    });
+    if (event.target.files[0]) {
+      setImage({
+        file: event.target.files[0],
+        fileName: event.target.files[0].name,
+        filePath: URL.createObjectURL(event.target.files[0]),
+      });
+    }
   };
 
   const handleResponse = (msg, status) => {
-    toast[`${status === 200 ? 'success' : 'error'}`](`${msg}`);
+    toast[`${status === 200 ? 'success' : 'error'}`](msg);
     if (status === 200) {
       setChanges(true);
       setSuccess(true);
       setSending(false);
-      setImage({ ...image, imagePath: rowSelected.paymentImage });
+      setImage({
+        file: '',
+        fileName: '',
+        filePath: '',
+      });
     } else {
+      setChanges(false);
+      setSuccess(false);
       setSending(false);
     }
   };
@@ -138,21 +148,11 @@ const RegistrationStatus = ({
     if (!sending && !success) {
       setSuccess(false);
       setSending(true);
-      const formData = new FormData();
-      formData.append('file', imagePath);
-      formData.append(
-        'upload_preset',
-        process.env.REACT_APP_UPLOAD_PRESENT_RECEIPTS,
-      );
 
-      //save image to cloudinary
-      const res = await axios.post(
-        process.env.REACT_APP_API_BASE_URL,
-        formData,
-      );
-      if (res.data.secure_url !== undefined) {
-        uploadImage(res.data.secure_url, rowSelected.id, handleResponse);
-      }
+      const formData = new FormData();
+      formData.append('image', file);
+
+      uploadImage(formData, rowSelected.id, handleResponse);
     }
   };
 
@@ -166,17 +166,16 @@ const RegistrationStatus = ({
             justify='center'
             alignItems='center'
             className={classes.grid}>
-            {rowSelected.status !== 'unpaid' &&
-            rowSelected.paymentImage !== '' ? (
+            {filePath ? (
               <Grid item xs={12} className={classes.gridItem}>
-                <Image src={imagePath} className={classes.image}></Image>
+                <Image src={filePath} className={classes.image}></Image>
               </Grid>
             ) : (
               ''
             )}
             <Grid item xs={12} className={classes.gridItem}>
               <Typography variant='h6' style={{ paddingTop: '20px' }}>
-                {imageName}
+                {fileName}
               </Typography>
             </Grid>
             {rowSelected.status === 'unpaid' ? (
@@ -193,7 +192,9 @@ const RegistrationStatus = ({
                     type='file'
                     onChange={handleChange}
                   />
-                  <label htmlFor='receipt-image-upload'>
+                  <label
+                    htmlFor='receipt-image-upload'
+                    style={{ disabled: sending }}>
                     <Button
                       variant='contained'
                       color='primary'
@@ -221,7 +222,7 @@ const RegistrationStatus = ({
                   className={classes.button}
                   onClick={() => {
                     removeRowSelected();
-                    history.goBack() === undefined
+                    history.goBack()
                       ? history.push('/my-activities')
                       : history.goBack();
                   }}
@@ -230,7 +231,7 @@ const RegistrationStatus = ({
                 </Button>
               </Grid>
             )}
-            {imageName !== '' ? (
+            {fileName ? (
               <Grid
                 item
                 xs={12}
@@ -244,8 +245,7 @@ const RegistrationStatus = ({
                     [classes.buttonSuccess]: success,
                   })}
                   startIcon={<CloudUploadIcon />}
-                  onClick={handleUpload}
-                  disabled={sending}>
+                  onClick={handleUpload}>
                   {success ? 'Uploaded' : 'Upload'}
                   {sending && (
                     <CircularProgress

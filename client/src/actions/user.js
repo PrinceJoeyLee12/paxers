@@ -14,8 +14,6 @@ export const updateUserProfilePicture = (
       `/user/update-user-profile-picture/${userId}`,
       formData,
     );
-    console.log(res.data.msg);
-    console.log(res.data.user);
 
     handleResponse(res.data.msg, res.status);
     dispatch({

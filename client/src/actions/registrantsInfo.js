@@ -66,15 +66,14 @@ export const storeRegistrantsData = (
 
 //Upload Photo to Cloud
 export const uploadImage = (
-  paymentImage,
+  formData,
   registrantId,
   handleResponse,
 ) => async dispatch => {
   try {
-    console.log(paymentImage);
     const res = await api.post(
       `/registrants/upload-receipt-image/${registrantId}`,
-      { paymentImage },
+      formData,
     );
 
     const { msg, newRegistrantData } = res.data;
@@ -91,7 +90,7 @@ export const uploadImage = (
     });
   } catch (err) {
     console.error(err);
-    handleResponse(err.msg, err.status);
+    handleResponse(err.response.data.msg, err.status);
   }
 };
 

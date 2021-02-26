@@ -26,7 +26,6 @@ export const loadUser = () => async dispatch => {
   } catch (err) {
     if (typeof err.response !== 'undefined') {
       if ('data' in err.response) {
-        console.log(err.response.data.msg);
         dispatch({
           type: AUTH_ERROR,
         });
@@ -41,33 +40,12 @@ export const loadUser = () => async dispatch => {
 // @route    GET api/auth/google
 // @desc     Register User using Google Oauth
 // @access   Public
-export const google = (formData, setErrors) => async dispatch => {
+export const googleSignIn = handleResponse => async dispatch => {
   try {
-    const { givenName, familyName, imageUrl, email } = formData;
-    const firstName = givenName,
-      lastName = familyName,
-      image = imageUrl;
-    const newFormData = { firstName, lastName, image, email };
-    const res = await api.post('/auth/google', newFormData);
-
-    dispatch({
-      type: AUTH_SUCCESS,
-      payload: res.data,
-    });
+    await api.get('/auth/google');
     dispatch(loadUser());
   } catch (err) {
-    if (typeof err.response !== 'undefined') {
-      if ('data' in err.response) {
-        if (err.response.status === 500)
-          return toast.error(err.response.data.msg);
-        setErrors(err.response.data);
-        console.log(err.response.data.msg);
-        dispatch({
-          type: AUTH_ERROR,
-        });
-        return;
-      }
-    }
+    handleResponse(err.response.data.msg, err.status);
     console.log(err);
   }
 };
