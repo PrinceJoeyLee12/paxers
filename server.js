@@ -18,18 +18,6 @@ connectDB();
 
 const app = express();
 
-// Logging if in development
-if (process.env.NODE_ENV === 'development') {
-  app.use(
-    cors({
-      origin: process.env.CLIENT_URL,
-      credentials: true, //access-control-allow-credentials:true
-      optionSuccessStatus: 200,
-    }),
-  );
-  app.use(morgan('dev'));
-}
-
 //Initialize Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -40,6 +28,15 @@ app.use(passport.session());
 // Passport config
 require('./config/passport')(passport);
 
+// Logging if in development
+if (process.env.NODE_ENV === 'development') {
+  app.use(
+    cors({
+      origin: process.env.CLIENT_URL,
+    }),
+  );
+  app.use(morgan('dev'));
+}
 // api routes
 app.use('/api', require('./routes/api/index'));
 
