@@ -226,7 +226,7 @@ const Login = ({
               )}
             /> */}
           </form>
-          <a href='http://localhost:5000/api/auth/google'>
+          <a href={`${window.location.origin}/api/auth/google`}>
             <Button
               fullWidth
               variant='contained'
