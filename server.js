@@ -12,7 +12,8 @@ const passport = require('passport');
  * if you're cloning this app make sure to make a "config.env" file in root/config
  * and have all your global variables there
  */
-dotenv.config({ path: './config/config.env' });
+if (process.env.NODE_ENV === 'development')
+  dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
