@@ -19,11 +19,11 @@ TOKEN_EXPIRATION='5 days'
 //this example represents one day
 REGISTRATION_EXPIRATION=2
 //for cloudinary settings and configuration
-UPLOAD_PRESENT_RECIEPTS='paxer-reciepts-upload'
-CLOUDINARY_PROFILE_FOLDER='paxers-profile-images'
-CLOUDINARY_HOST='paxers'
-CLOUDINARY_API_SECRET='6INJsSpTsjnvrmlK16ZivauSYGY'
-CLOUDINARY_API_KEY=937796873533124
+UPLOAD_PRESENT_RECIEPTS='<folder_for_receipts>'
+CLOUDINARY_PROFILE_FOLDER='<folder_for_images>'
+CLOUDINARY_HOST='<host>' // in my case it is "paxers"
+CLOUDINARY_API_SECRET='<api_secret>'
+CLOUDINARY_API_KEY='<api_key>'
 
 ```
 
