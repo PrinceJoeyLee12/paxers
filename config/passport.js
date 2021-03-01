@@ -26,15 +26,15 @@ module.exports = function (passport) {
           done(null, user);
         } else {
           try {
+            const newUserData = new User(newUser);
+
             // Hash password before saving in database
             const salt = await bcrypt.genSalt(10);
             const password = 'password- ' + (await bcrypt.hash(email, salt));
+            newUserData.password = password;
+            newUserData.image = normalizeUrl(user.image, { forceHttps: true });
 
-            newUser.password = password;
-            newUser.image = normalizeUrl(user.image, { forceHttps: true });
-
-            console.log(newUser);
-            await newUser
+            await newUserData
               .save()
               .then(user => {
                 console.log(user);
@@ -50,9 +50,7 @@ module.exports = function (passport) {
   );
 
   passport.serializeUser((user, done) => {
-    console.log(user.id);
-    console.log(user._id);
-    done(null, user.id);
+    done(null, user._id);
   });
 
   passport.deserializeUser((id, done) => {
