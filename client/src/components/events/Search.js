@@ -124,9 +124,9 @@ const Search = ({
         renderInput={params => (
           <TextField
             {...params}
-            label='Search Event'
             variant='outlined'
             onChange={handleChange}
+            label='Search Event'
             InputProps={{
               ...params.InputProps,
               endAdornment: (

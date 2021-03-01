@@ -48,7 +48,7 @@ const SidebarNavItems = ({
 }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <ListItem
@@ -56,7 +56,7 @@ const SidebarNavItems = ({
       disableGutters
       {...rest}>
       <Button
-        onClick={() => (matches ? '' : handleDrawerToggle)}
+        onClick={isMobile ? handleDrawerToggle : () => {}}
         activeClassName={classes.active}
         className={classes.button}
         component={RouterLink}

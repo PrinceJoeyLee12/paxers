@@ -4,8 +4,16 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 //material ui
-import { DataGrid } from '@material-ui/data-grid';
-import { CircularProgress } from '@material-ui/core';
+import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { CircularProgress, Chip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+//icons
+import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
+import {
+  XCircle as XCircleIcon,
+  CheckCircle as CheckCircleIcon,
+} from 'react-feather';
 
 //actions
 import {
@@ -21,6 +29,21 @@ const RenderFallbackOption = ({ children, ...other }) => {
   return <div style={{ textAlign: 'center' }}>{children}</div>;
 };
 
+const useStyles = makeStyles(theme => ({
+  registrationStatusOpen: {
+    borderColor: 'green',
+    backgroundColor: 'rgb(0,255,0,0.1)',
+  },
+  registrationStatusClose: {
+    borderColor: 'red',
+    backgroundColor: 'rgb(255,0,0,0.1)',
+  },
+  inReviewStatus: {
+    borderColor: 'blue',
+    backgroundColor: 'rgb(0,0,255,0.1)',
+  },
+}));
+
 const UpcomingActivities = ({
   activity: { upcomingActivities, isThereAChanges },
   getUpcomingActivities,
@@ -31,7 +54,7 @@ const UpcomingActivities = ({
   const [readyToView, setReadyToView] = useState(false);
   const [status, setStatus] = useState(false);
   const [rows, setRows] = useState([]);
-
+  const classes = useStyles();
   const handleStatus = status => {
     setStatus(status === '200' ? true : false);
   };
@@ -90,6 +113,100 @@ const UpcomingActivities = ({
     // eslint-disable-next-line
   }, [user._id, setChanges, upcomingActivities]);
 
+  const columns = [
+    {
+      field: 'no',
+      headerName: 'No',
+      sortable: false,
+      width: 60,
+      disableColumnMenu: true,
+    },
+    {
+      field: 'distance',
+      headerName: 'Distance',
+      sortable: false,
+      width: 100,
+    },
+    {
+      field: 'dateReserved',
+      headerName: 'Date Reserved',
+      sortable: false,
+      width: 200,
+    },
+    {
+      field: 'nameOfEvent',
+      headerName: 'Name of Event',
+      sortable: false,
+      width: 200,
+    },
+    {
+      field: 'dateOfEvent',
+      headerName: 'Date of Event',
+      sortable: false,
+      width: 190,
+    },
+    {
+      field: 'expirationDate',
+      headerName: 'Expiration Date',
+      sortable: false,
+      width: 190,
+    },
+    {
+      field: 'paymentMethod',
+      headerName: 'Payment Method',
+      sortable: false,
+      width: 150,
+    },
+    {
+      field: 'amountToPay',
+      headerName: 'Amount To Pay',
+      sortable: false,
+    },
+    {
+      field: 'transactionId',
+      headerName: 'Transaction Id',
+      sortable: false,
+      width: 190,
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      sortable: true,
+      renderCell: params => (
+        <strong>
+          <Chip
+            size='small'
+            variant='outlined'
+            className={
+              params.value === 'paid'
+                ? classes.registrationStatusOpen
+                : params.value === 'unpaid'
+                ? classes.registrationStatusClose
+                : classes.inReviewStatus
+            }
+            avatar={
+              params.value === 'paid' ? (
+                <CheckCircleIcon />
+              ) : params.value === 'unpaid' ? (
+                <XCircleIcon />
+              ) : (
+                <ErrorOutlineOutlinedIcon color='primary' />
+              )
+            }
+            label={params.value}
+          />
+        </strong>
+      ),
+      width: 130,
+    },
+    {
+      field: 'link',
+      headerName: 'Link',
+      sortable: false,
+      width: 400,
+    },
+  ];
+
   useEffect(() => {
     if (isThereAChanges) {
       setReadyToView(false);
@@ -102,75 +219,18 @@ const UpcomingActivities = ({
       {readyToView ? (
         <Fragment>
           <div style={{ height: 500, width: '100%', marginTop: '10px' }}>
+            (Click on any row below to show data)
             <DataGrid
+              columns={columns}
+              rows={rows}
+              disableColumnSelector={false}
               scrollbarSize={40}
               hideFooterRowCount
               hideFooterSelectedRowCount
               onRowClick={({ row }) => setRowSelected(row)}
-              rows={rows}
-              columns={[
-                {
-                  field: 'no',
-                  headerName: 'No',
-                  sortable: false,
-                  width: 60,
-                  disableColumnMenu: true,
-                },
-                {
-                  field: 'distance',
-                  headerName: 'Distance',
-                  sortable: false,
-                  width: 100,
-                },
-                {
-                  field: 'dateReserved',
-                  headerName: 'Date Reserved',
-                  sortable: false,
-                  width: 200,
-                },
-                {
-                  field: 'nameOfEvent',
-                  headerName: 'Name of Event',
-                  sortable: false,
-                  width: 200,
-                },
-                {
-                  field: 'dateOfEvent',
-                  headerName: 'Date of Event',
-                  sortable: false,
-                  width: 190,
-                },
-                {
-                  field: 'expirationDate',
-                  headerName: 'Expiration Date',
-                  sortable: false,
-                  width: 190,
-                },
-                {
-                  field: 'paymentMethod',
-                  headerName: 'Payment Method',
-                  sortable: false,
-                  width: 150,
-                },
-                {
-                  field: 'amountToPay',
-                  headerName: 'Amount To Pay',
-                  sortable: false,
-                },
-                {
-                  field: 'transactionId',
-                  headerName: 'Transaction Id',
-                  sortable: false,
-                  width: 190,
-                },
-                { field: 'status', headerName: 'Status', sortable: true },
-                {
-                  field: 'link',
-                  headerName: 'Link',
-                  sortable: false,
-                  width: 400,
-                },
-              ]}
+              components={{
+                Toolbar: GridToolbar,
+              }}
             />
           </div>
         </Fragment>
