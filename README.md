@@ -9,28 +9,30 @@ Is web app for runners and event makers
 ```js
 CLIENT_URL = http://localhost:3000
 MONGO_URI='<your_mongoDB_Atlas_uri_with_credentials>'
-SECRET_KEY = "mysecret"
+GOOGLE_CLIENT_ID="<your_google_client_ID>"
 GOOGLE_EMAIL="<your_google_mail>@gmail.com"
-GOOGLE_EMAIL_PASS='<your_google_account_password>'
+GOOGLE_CLIENT_SECRET="<google_client_secret>"
+SECRET_KEY = "mysecret"
+TOKEN_EXPIRATION='5 days'
 
-#this will be configure soon stores in Event "paymentExpiresIn" Model
-#this example represents one day
+//this will be configure soon stores in Event "paymentExpiresIn" Model
+//this example represents one day
 REGISTRATION_EXPIRATION=2
+//for cloudinary settings and configuration
+UPLOAD_PRESENT_RECIEPTS='paxer-reciepts-upload'
+CLOUDINARY_PROFILE_FOLDER='paxers-profile-images'
+CLOUDINARY_HOST='paxers'
+CLOUDINARY_API_SECRET='6INJsSpTsjnvrmlK16ZivauSYGY'
+CLOUDINARY_API_KEY=937796873533124
+
 ```
 
 ### add a ".env" file in to client/src folder
 
 ```js
-REACT_APP_GOOGLE_CLIENT_ID='<your_google_client_id>'
-REACT_APP_BRAND_NAME='Paxers'
-REACT_APP_DRAWER_WIDTH=240
-REACT_APP_CLIENT_URL='http://localhost:3000'
-#used for storing photos
-REACT_APP_API_BASE_URL='<your_cloudinary_api_base_url>'
-
-#create a two upload present in your cloudinary account one for receipt and the other for profiles make sure to make it unsigned so that everybody can upload
-REACT_APP_UPLOAD_PRESENT_RECEIPTS='<upload_present _for_receipt>'
-REACT_APP_UPLOAD_PRESENT_PROFILE='<upload_present _for_profiles>'
+REACT_APP_BRAND_NAME = 'Paxers';
+//Though I used ( window.location.origin ) it just good to add this one to make sure everything will went well.
+REACT_APP_CLIENT_URL = 'http://localhost:3000';
 ```
 
 ### Install client dependencies
@@ -103,7 +105,7 @@ I divided the project into TWO audience
 ### For Runners (40% done)
 
 1.  Changing UI (for I suck and don't have the eye in designing. So I decided to buy a ready made theme and customize it as much as possible with my needs) or maybe I'll hire someone to have ui/ux design for me
-2.  I will implement the notification function in AZURE (signalR) and with EVENT GRID (But don't have credit card yet which they require in making my account). In advance I just studied the modules for it.
+2.  I will implement the notification function with KAFKA and event trigger on registrants ( I just discovered it today that it is possible to have connectors with mongodb 😅😅)
 3.  Authenticating and syncing activities data with [STRAVA](https://www.strava.com/).
 4.  Having a calendar for activities
 5.  Standardize Error handling
