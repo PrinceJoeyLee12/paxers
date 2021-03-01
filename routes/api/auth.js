@@ -106,10 +106,10 @@ router.get(
         { expiresIn: process.env.TOKEN_EXPIRATION },
         (err, token) => {
           if (err) {
-            return res.redirect('/login');
+            console.log(err);
+            return res.redirect(`${process.env.CLIENT_URL}/login`);
           }
-          // console.log(req.headers.host);
-          // res.redirect(`${req.headers.host}/${token}`); //upon deploying to the heroku I can opt to this option
+          console.log(token);
           res.redirect(`${process.env.CLIENT_URL}/auth/${token}`);
         },
       );

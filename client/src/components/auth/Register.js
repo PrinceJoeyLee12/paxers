@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { GoogleLogin } from 'react-google-login';
+// import { GoogleLogin } from 'react-google-login';
 
 import { register, googleSignIn } from '../../actions/auth';
 import { ToastContainer } from 'react-toastify';
@@ -62,16 +62,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2),
   },
   googleButton: {
-    margin: theme.spacing(-1, 0, 2),
-    backgroundColor: theme.palette.secondary.main,
-    color: 'white',
-    width: '100%',
-    '& :hover': {
-      backgroundColor: theme.palette.secondary.main,
-    },
-    '& .MuiButton-root:hover': {
-      backgroundColor: theme.palette.secondary.main,
-    },
+    marginBottom: theme.spacing(2),
   },
   FormControl: {
     width: '100%',
@@ -275,7 +266,7 @@ const Register = ({ isAuthenticated, register, googleSignIn }) => {
               className={classes.submit}>
               {textChange}
             </Button>
-            <GoogleLogin
+            {/* <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               onSuccess={googleResponse}
               onFailure={googleResponse}
@@ -293,15 +284,29 @@ const Register = ({ isAuthenticated, register, googleSignIn }) => {
                   <Typography>Sign Up with Google</Typography>
                 </Button>
               )}
-            />
-            <Grid container justify='flex-end'>
-              <Grid item>
-                <Link href='/login' variant='body2'>
-                  {'Already have an account? Sign in'}
-                </Link>
-              </Grid>
-            </Grid>
+            /> */}
           </form>
+          <a
+            href={`${window.location.origin}/api/auth/google`}
+            style={{ textDecoration: 'none', width: '100%' }}>
+            <Button
+              fullWidth
+              variant='contained'
+              color='secondary'
+              className={classes.googleButton}
+              // onClick={handleGoogleSignIn}
+            >
+              <i className='fab fa-google' style={{ paddingRight: '10px' }} />
+              Login with Google
+            </Button>
+          </a>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              <Link href='/login' variant='body2'>
+                {'Already have an account? Sign in'}
+              </Link>
+            </Grid>
+          </Grid>
         </div>
         <Box mt={8}>
           <Footer />

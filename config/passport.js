@@ -38,6 +38,7 @@ module.exports = function (passport) {
             await user
               .save()
               .then(user => {
+                console.log(user);
                 done(null, user);
               })
               .catch(err => console.log(err));
@@ -50,6 +51,8 @@ module.exports = function (passport) {
   );
 
   passport.serializeUser((user, done) => {
+    console.log(user.id);
+    console.log(user._id);
     done(null, user.id);
   });
 

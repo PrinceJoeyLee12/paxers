@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
 
 import { login, googleSignIn } from '../../actions/auth';
 import { setDialog } from '../../actions/alert';
@@ -117,21 +116,21 @@ const Login = ({
     login({ email, password }, textChangeAfterSubmit, handleErrors);
   };
 
-  useEffect(() => {
-    if (
-      localStorage.getItem(`prevPath`) !== undefined &&
-      localStorage.getItem(`prevPath`) !== ''
-    ) {
-      // eslint-disable-next-line
-      setDialog(
-        'You are not login',
-        "Please Login first. If you don't have an account yet you can register with link provided in the form below",
-        'Close',
-        '',
-        '',
-      );
-    }
-  }, [setDialog]);
+  // useEffect(() => {
+  //   if (
+  //     localStorage.getItem(`prevPath`) !== undefined &&
+  //     localStorage.getItem(`prevPath`) !== ''
+  //   ) {
+  //     // eslint-disable-next-line
+  //     setDialog(
+  //       'You are not login',
+  //       "Please Login first. If you don't have an account yet you can register with link provided in the form below",
+  //       'Close',
+  //       '',
+  //       '',
+  //     );
+  //   }
+  // }, [setDialog]);
 
   if (isAuthenticated) {
     localStorage.removeItem('prevPath');
@@ -206,27 +205,11 @@ const Login = ({
               className={classes.submit}>
               {textChange}
             </Button>
-            {/* <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              onSuccess={googleResponse}
-              onFailure={googleFailure}
-              className={classes.googleButton}
-              cookiePolicy={'single_host_origin'}
-              render={renderProps => (
-                <Button
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  className={classes.googleButton}>
-                  <i
-                    className='fab fa-google'
-                    style={{ paddingRight: '10px' }}
-                  />
-                  <Typography>Google Sign In</Typography>
-                </Button>
-              )}
-            /> */}
           </form>
-          <a href={`${window.location.origin}/api/auth/google`}>
+          {/* <a href={`http://localhost:5000/api/auth/google`}> */}
+          <a
+            href={`${window.location.origin}/api/auth/google`}
+            style={{ textDecoration: 'none', width: '100%' }}>
             <Button
               fullWidth
               variant='contained'
