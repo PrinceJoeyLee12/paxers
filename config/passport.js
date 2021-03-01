@@ -26,21 +26,17 @@ module.exports = function (passport) {
           done(null, user);
         } else {
           try {
-            const newUserData = new User(newUser);
+            const user = new User(newUser);
 
             // Hash password before saving in database
             const salt = await bcrypt.genSalt(10);
             const password = 'password- ' + (await bcrypt.hash(email, salt));
-            newUserData.password = password;
-            newUserData.image = normalizeUrl(user.image, { forceHttps: true });
+            user.password = password;
+            user.image = normalizeUrl(user.image, { forceHttps: true });
 
-            await newUserData
-              .save()
-              .then(user => {
-                console.log(user);
-                done(null, user);
-              })
-              .catch(err => console.log(err));
+            const newUserData = await user.save();
+            console.log(newUserData);
+            done(null, newUserData);
           } catch (err) {
             console.log(err);
           }
