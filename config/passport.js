@@ -30,12 +30,11 @@ module.exports = function (passport) {
             const salt = await bcrypt.genSalt(10);
             const password = 'password- ' + (await bcrypt.hash(email, salt));
 
-            user = new User(newUser);
+            newUser.password = password;
+            newUser.image = normalizeUrl(user.image, { forceHttps: true });
 
-            user.password = password;
-            user.image = normalizeUrl(user.image, { forceHttps: true });
-
-            await user
+            console.log(newUser);
+            await newUser
               .save()
               .then(user => {
                 console.log(user);
