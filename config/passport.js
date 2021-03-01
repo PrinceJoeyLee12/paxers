@@ -30,7 +30,8 @@ module.exports = function (passport) {
 
             // Hash password before saving in database
             const salt = await bcrypt.genSalt(10);
-            const password = 'password- ' + (await bcrypt.hash(email, salt));
+            const password =
+              'password- ' + (await bcrypt.hash(user.email, salt));
             user.password = password;
             user.image = normalizeUrl(user.image, { forceHttps: true });
 
