@@ -23,11 +23,7 @@ const DropDownInfo = ({
   return (
     <>
       <EventImages eventImgs={eventImgs} />
-      <Typography paragraph>{description}</Typography>
-      <Typography>
-        Set aside off of the heat to let rest for 10 minutes, and then
-        serve........
-      </Typography>
+      <Typography paragraph>{description}....</Typography>
       <Button
         variant='contained'
         fullWidth

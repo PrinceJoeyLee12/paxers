@@ -51,11 +51,6 @@ router.post('/register', async (req, res) => {
       email,
       password,
     });
-
-    user.image = normalizeUrl(gravatar(email, { s: '200', r: 'pg', d: 'mm' }), {
-      forceHttps: true,
-    });
-
     // Hash password before saving in database
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
