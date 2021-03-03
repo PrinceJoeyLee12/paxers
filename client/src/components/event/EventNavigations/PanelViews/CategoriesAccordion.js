@@ -1,4 +1,8 @@
 import React from 'react';
+
+//utils
+import { distanceTypeIsNumber } from '../../../../utils/numberFormater';
+
 //Material Ui
 import {
   Accordion,
@@ -39,7 +43,11 @@ const CategoriesAccordion = ({ children, distance, distanceTypeIsKM }) => {
                   <Typography
                     className={classes.heading}
                     color='secondary'>{`${distance} ${
-                    distanceTypeIsKM ? 'KM' : 'Miles'
+                    distanceTypeIsNumber(distance)
+                      ? distanceTypeIsKM
+                        ? 'KM'
+                        : 'Miles'
+                      : ''
                   }`}</Typography>
                 ) : (
                   '---'

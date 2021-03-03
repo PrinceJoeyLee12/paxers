@@ -9,7 +9,7 @@ import {
   Settings as SettingsIcon,
   LogIn as LoginIcon,
   Calendar as CalendarIcon,
-  FilePlus as FilePlusIcon,
+  // FilePlus as FilePlusIcon,
   User as UserIcon,
   Clipboard as ClipboardIcon,
   Wind as WindIcon,

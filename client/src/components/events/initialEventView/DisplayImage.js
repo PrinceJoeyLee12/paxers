@@ -19,15 +19,7 @@ const DisplayImage = ({ displayImg, title, isVirtual }) => {
 
   return (
     <>
-      <CardMedia
-        className={classes.media}
-        image={displayImg}
-        title={
-          <Typography style={{ color: '#000' }} variant='h4'>
-            {title}
-          </Typography>
-        }
-      />
+      <CardMedia className={classes.media} image={displayImg} title={title} />
       {isVirtual ? (
         <>
           <Box

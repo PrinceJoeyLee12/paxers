@@ -119,10 +119,10 @@ const Register = ({ isAuthenticated, register, googleSignIn }) => {
     setFormData({ ...formData, errors });
   };
 
-  const googleResponse = response => {
-    const { email, familyName, givenName, imageUrl } = response.profileObj;
-    googleSignIn({ familyName, givenName, email, imageUrl }, setErrors);
-  };
+  // const googleResponse = response => {
+  //   const { email, familyName, givenName, imageUrl } = response.profileObj;
+  //   googleSignIn({ familyName, givenName, email, imageUrl }, setErrors);
+  // };
 
   const handleSubmit = e => {
     e.preventDefault();

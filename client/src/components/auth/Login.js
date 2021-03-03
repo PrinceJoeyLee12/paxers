@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -107,14 +107,19 @@ const Login = ({
     toast[`${status === 200 ? 'success' : 'error'}`](msg);
   };
 
-  const handleGoogleSignIn = async () => {
-    googleSignIn(handleResponse);
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
-    login({ email, password }, textChangeAfterSubmit, handleErrors);
+    login(
+      { email, password },
+      textChangeAfterSubmit,
+      handleErrors,
+      handleResponse,
+    );
   };
+
+  // const handleGoogleSignIn = async () => {
+  //   googleSignIn(handleResponse);
+  // };
 
   // useEffect(() => {
   //   if (

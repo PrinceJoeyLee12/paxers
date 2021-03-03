@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+//utils
+import { distanceTypeIsNumber } from '../../../utils/numberFormater';
+
 //material ui
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import { CircularProgress, Chip } from '@material-ui/core';
@@ -71,7 +74,11 @@ const UpcomingActivities = ({
           id: activity._id,
           no: index + 1,
           distance: `${activity.data.categorySelected} ${
-            activity.event.distanceTypeIsKM ? ' km' : 'miles'
+            distanceTypeIsNumber(activity.data.categorySelected)
+              ? activity.event.distanceTypeIsKM
+                ? ' km'
+                : 'miles'
+              : ''
           }`,
           dateReserved: `${moment(activity.dateRegistered).format(
             'MMM DD, YYYY hh:mm a',

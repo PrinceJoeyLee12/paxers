@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Image from 'material-ui-image';
 import classnames from 'classnames';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 //actions

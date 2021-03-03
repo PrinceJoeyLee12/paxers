@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
+//utils
+import { distanceTypeIsNumber } from '../../utils/numberFormater';
 import { Field } from 'formik';
 
 //Category selection
@@ -57,7 +58,13 @@ const CategorySelection = props => {
           className='select-css'>
           {orderOfCategories.map((category, index) => (
             <option key={index} value={category || ''}>
-              {`${category} ${distanceTypeIsKM ? 'Km' : 'Miles'}`}
+              {`${category} ${
+                distanceTypeIsNumber(category)
+                  ? distanceTypeIsKM
+                    ? 'Km'
+                    : 'Miles'
+                  : ''
+              }`}
             </option>
           ))}
         </Field>

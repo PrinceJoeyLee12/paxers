@@ -1,6 +1,9 @@
 import React from 'react';
 import Moment from 'react-moment';
 
+//utils
+import { distanceTypeIsNumber } from '../../../utils/numberFormater';
+
 //Material Ui
 import { Typography } from '@material-ui/core';
 
@@ -47,7 +50,13 @@ const InitialInfo = ({
           component='p'>
           {categories.map((category, index) => (
             <span key={index}>
-              {` ${category.distance}${distanceTypeIsKM ? 'km' : 'miles'}, `}
+              {` ${category.distance}${
+                distanceTypeIsNumber(category.distance)
+                  ? distanceTypeIsKM
+                    ? 'km'
+                    : 'miles'
+                  : ''
+              }${index !== categories.length - 1 ? ',' : ''} `}
             </span>
           ))}
         </Typography>

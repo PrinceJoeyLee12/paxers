@@ -30,3 +30,11 @@ export const convertToTimeFormat = timeToConvert => {
   else if (hours === '0') return minutes + ':' + seconds;
   else return hours + ':' + minutes + ':' + seconds;
 };
+
+export const distanceTypeIsNumber = distance => {
+  if (typeof distance != 'string') return false; // we only process strings!
+  return (
+    !isNaN(distance) && //return false if distance is not a number type
+    !isNaN(parseFloat(distance))
+  ); // ensure strings of whitespace fail but floated number aren't
+};

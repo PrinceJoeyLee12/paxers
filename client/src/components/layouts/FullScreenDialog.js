@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 
 //utils
 import { toSentenceFormat, charReplacer } from '../../utils/textFormater';
-import { formatToCurrency } from '../../utils/numberFormater';
+import {
+  formatToCurrency,
+  distanceTypeIsNumber,
+} from '../../utils/numberFormater';
 
 //actions
 import { setDialog } from '../../actions/alert';
@@ -140,7 +143,11 @@ const FullScreenDialog = ({
                       {value !== 'categorySelected'
                         ? registrantsInfo.data[value]
                         : `${registrantsInfo.data[value]} ${
-                            distanceTypeIsKM ? 'Km' : 'Miles'
+                            distanceTypeIsNumber(registrantsInfo.data[value])
+                              ? distanceTypeIsKM
+                                ? 'Km'
+                                : 'Miles'
+                              : ''
                           }`}{' '}
                     </Typography>
                   </Grid>

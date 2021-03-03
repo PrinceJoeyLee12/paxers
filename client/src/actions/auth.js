@@ -6,7 +6,6 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  AUTH_SUCCESS,
   LOGOUT,
 } from './types';
 
@@ -83,6 +82,7 @@ export const login = (
   formData,
   textChangeAfterSubmit,
   setErrors,
+  handleResponse,
 ) => async dispatch => {
   try {
     textChangeAfterSubmit('Submitting...');
@@ -99,7 +99,7 @@ export const login = (
       setErrors(err.response.data);
       textChangeAfterSubmit('Submit');
       if (err.response.status === 500 || err.response.status === 401) {
-        toast.error(err.response.data.msg);
+        handleResponse(err.response.data.msg, err.response.status);
       }
       dispatch({
         type: LOGIN_FAILURE,
