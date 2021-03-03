@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 //material UI
 import { CardHeader } from '@material-ui/core';
 
-const Header = ({ title, startDate, endDate }) => {
+const Header = ({ title, startDate, endDate, isVirtual }) => {
   return (
     <>
       <CardHeader
@@ -12,8 +12,14 @@ const Header = ({ title, startDate, endDate }) => {
           startDate && endDate ? (
             <>
               <Moment format='MMM DD, YYYY'>{startDate}</Moment>
-              <span>{' - '}</span>
-              <Moment format='MMM DD, YYYY'>{endDate}</Moment>
+              {isVirtual ? (
+                <>
+                  <span>{' - '}</span>
+                  <Moment format='MMM DD, YYYY'>{endDate}</Moment>
+                </>
+              ) : (
+                ''
+              )}
             </>
           ) : (
             <Moment format='MMMM DD, YYYY ' date={startDate} />

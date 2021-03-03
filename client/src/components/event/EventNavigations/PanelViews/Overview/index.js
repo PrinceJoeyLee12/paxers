@@ -33,6 +33,7 @@ const Overview = ({ event: { event } }) => {
     registrationEnd,
     categories,
     endDate,
+    isVirtual,
   } = event;
   const classes = useStyles();
 
@@ -58,8 +59,14 @@ const Overview = ({ event: { event } }) => {
                 {startDate && endDate ? (
                   <>
                     <Moment format='MMM DD, YYYY'>{startDate}</Moment>
-                    <span>{' - '}</span>
-                    <Moment format='MMM DD, YYYY'>{endDate}</Moment>
+                    {isVirtual ? (
+                      <>
+                        <span>{' - '}</span>
+                        <Moment format='MMM DD, YYYY'>{endDate}</Moment>
+                      </>
+                    ) : (
+                      ''
+                    )}
                   </>
                 ) : (
                   <Moment format='MMMM DD, YYYY ' date={startDate} />

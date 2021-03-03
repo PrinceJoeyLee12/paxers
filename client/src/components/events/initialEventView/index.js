@@ -99,7 +99,12 @@ const EventInitialView = ({
             history={history}
             style={{ textDecoration: 'none' }}>
             <CardActionArea>
-              <Header title={title} startDate={startDate} endDate={endDate} />
+              <Header
+                title={title}
+                startDate={startDate}
+                endDate={endDate}
+                isVirtual={isVirtual}
+              />
             </CardActionArea>
             <CardActionArea style={{ position: 'relative' }}>
               <DisplayImage
