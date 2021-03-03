@@ -30,7 +30,7 @@ const RegistrationButton = ({
   const [isThereASlotAvailable, setIsThereASlotAvailable] = useState(false);
 
   useEffect(() => {
-    if (categories !== undefined) {
+    if (categories) {
       setIsThereASlotAvailable(checkCategoryAvailabilityInAll(categories));
     }
   }, [setIsThereASlotAvailable, categories]);
@@ -48,11 +48,7 @@ const RegistrationButton = ({
           color='secondary'
           disableElevation
           disabled={
-            !(
-              isThereASlotAvailable &&
-              checkRegistrationStatus(registrationEnd) &&
-              checkCategoryAvailabilityInAll(categories)
-            )
+            !(isThereASlotAvailable && checkRegistrationStatus(registrationEnd))
           }
           onClick={() => {
             localStorage.setItem('prevPath', location.pathname);

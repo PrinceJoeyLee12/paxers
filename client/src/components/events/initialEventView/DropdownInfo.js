@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 
 //utils
@@ -20,6 +20,13 @@ const DropDownInfo = ({
   registrationEnd,
   categories,
 }) => {
+  const [isThereASlotAvailable, setIsThereASlotAvailable] = useState(false);
+
+  useEffect(() => {
+    if (categories) {
+      setIsThereASlotAvailable(checkCategoryAvailabilityInAll(categories));
+    }
+  }, [setIsThereASlotAvailable, categories]);
   return (
     <>
       <EventImages eventImgs={eventImgs} />
@@ -40,10 +47,7 @@ const DropDownInfo = ({
         style={{ marginTop: '10px' }}
         color='secondary'
         disabled={
-          !(
-            checkRegistrationStatus(registrationEnd) &&
-            checkCategoryAvailabilityInAll(categories)
-          )
+          !(checkRegistrationStatus(registrationEnd) && isThereASlotAvailable)
         }
         onClick={() => {
           history.push(`/form/${eventTitle}/${eventId}`);

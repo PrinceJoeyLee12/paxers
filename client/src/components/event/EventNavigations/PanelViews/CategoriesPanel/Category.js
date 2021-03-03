@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // utils
 import { checkRegistrationStatus } from '../../../../../utils/checkRegistrationStatus';
+import { distanceTypeIsNumber } from '../../../../../utils/numberFormater';
 
 //Material Ui
 import { Typography, Grid, Button } from '@material-ui/core';
@@ -171,8 +172,14 @@ const Category = ({
                 }}
                 disableElevation>
                 <Typography variant='subtitle1'>
-                  Register{' '}
-                  {`   ${distance}${distanceTypeIsKM ? 'KM' : 'miles'}`}
+                  Register{' for '}
+                  {`   ${distance}${
+                    distanceTypeIsNumber(distance)
+                      ? distanceTypeIsKM
+                        ? 'KM'
+                        : 'miles'
+                      : ''
+                  }`}
                 </Typography>
               </Button>
             </Grid>
