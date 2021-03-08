@@ -69,12 +69,10 @@ router.post('/register', async (req, res) => {
       (err, token) => {
         if (err)
           return res.json({ msg: 'Cannot generate token as of the moment' });
-        console.log(token);
         res.json({ token });
       },
     );
   } catch (err) {
-    console.log(err.message);
     res.status(500).json({ msg: 'Server Error' });
   }
 });
@@ -105,10 +103,8 @@ router.post(
             { image },
             { new: true, upsert: true, setDefaultsOnInsert: true },
           );
-          console.log(updatedUser);
           res.json({ msg: 'Successfully Changed', user: updatedUser });
         } catch (err) {
-          console.error(err);
           return res.status(400).json({
             msg:
               "There's something wrong saving your picture. Please try again later",
@@ -121,7 +117,6 @@ router.post(
         });
       }
     } catch (err) {
-      console.log(err);
       res.json({
         msg: "There's an error saving you profile please try again later",
       });
@@ -149,12 +144,9 @@ router.post(
       dialCode,
     } = req.body;
 
-    console.log(birthDate);
-
     const { isValid, errors } = validateProfileDetailsInput(req.body);
 
     if (!isValid) {
-      console.log(errors);
       return res.status(403).json(errors);
     }
 
@@ -179,7 +171,6 @@ router.post(
           : mySports.split(',').map(sport => ' ' + sport.trim()),
         eventsLiked,
       };
-      console.log(birthDate);
 
       try {
         // Using upsert option (creates new doc if no match is found):
@@ -189,17 +180,13 @@ router.post(
           { new: true, upsert: true, setDefaultsOnInsert: true },
         ).select('-password');
 
-        console.log(updatedUser.birthDate);
-
         res.json({ user: updatedUser, msg: 'Update success' });
       } catch (err) {
-        console.log(err);
         res.status(500).json({
           msg: "There's an error saving you profile please try again later",
         });
       }
     } catch (err) {
-      console.log(err);
       res.json({
         msg: "There's an error saving you profile please try again later",
       });
@@ -216,14 +203,11 @@ router.put(
   async (req, res) => {
     const { preferredMeasurementIsMetric } = req.body;
 
-    console.log(preferredMeasurementIsMetric);
-
     try {
       const user = await User.findById(req.params.userId);
 
       if (!user)
         return res.status(404).json({ msg: 'Request denied, user not found' });
-      console.log(user);
 
       const { _id } = user;
 
@@ -235,17 +219,13 @@ router.put(
           { upsert: true, new: true, setDefaultsOnInsert: true },
         ).select('-password');
 
-        console.log(toUpdateUserSettings);
-
         res.json({ msg: 'Update success' });
       } catch (err) {
-        console.log(err);
         res.status(500).json({
           msg: "There's an error saving you profile please try again later",
         });
       }
     } catch (err) {
-      console.log(err);
       res.json({
         msg: "There's an error saving you profile please try again later",
       });
@@ -288,13 +268,11 @@ router.post(
           res.json({ msg: `Updated` });
         })
         .catch(err => {
-          console.log(err);
           res
             .status(500)
             .json({ msg: `Unable to update password. Please try again.` });
         });
     } catch (err) {
-      console.log(err);
       res.json({ msg: `Error on updating settings` });
     }
   },
@@ -326,7 +304,6 @@ router.post(
         });
 
         const tempPasswordGenerator = passwordGenerator(7);
-        console.log(`Password: ${tempPasswordGenerator}`);
 
         const emailData = {
           from: process.env.GOOGLE_EMAIL,
@@ -341,7 +318,6 @@ router.post(
         };
         transporter.sendMail(emailData, async function (error, info) {
           if (error) {
-            console.log(error);
             return res.status(500).json({
               msg: `Cannot send link to ${email}. There's a failure in our side.`,
             });
@@ -356,13 +332,11 @@ router.post(
               { new: true },
             )
               .then(result => {
-                console.log(result.password);
                 res.json({
                   msg: `Password was successfully sent to ${email}. Please Check your Inbox`,
                 });
               })
               .catch(err => {
-                console.log(err);
                 res.json({
                   msg:
                     'Please neglect using that password we sent to your email for we have field to save that on our database. Just try Again',
@@ -371,13 +345,11 @@ router.post(
           }
         });
       } catch (err) {
-        console.log(err);
         res.json({
           msg: `Cannot send link to ${data.email}. There's a failure in our side.`,
         });
       }
     } catch (err) {
-      console.log(err);
       res.json({ msg: `Error on updating settings` });
     }
   },

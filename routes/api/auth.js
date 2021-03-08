@@ -26,7 +26,6 @@ router.get('/', headerCheckTokenMiddleware, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
-    console.error(err.message);
     res.status(500).json('Server Error');
   }
 });
@@ -77,7 +76,6 @@ router.post('/login', async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err.message);
     res.status(500).json({ msg: 'Server Error!' });
   }
 });
@@ -93,7 +91,6 @@ router.get(
     failureRedirect: `${process.env.CLIENT_URL}/login`,
   }),
   (req, res) => {
-    console.log(req.user._id);
     try {
       const payload = {
         user: {
@@ -106,15 +103,12 @@ router.get(
         { expiresIn: process.env.TOKEN_EXPIRATION },
         (err, token) => {
           if (err) {
-            console.log(err);
             return res.redirect(`${process.env.CLIENT_URL}/login`);
           }
-          console.log(token);
           res.redirect(`${process.env.CLIENT_URL}/auth/${token}`);
         },
       );
     } catch (err) {
-      console.log(err);
       res.redirect('/login');
     }
   },
@@ -149,7 +143,6 @@ router.post('/google', async (req, res) => {
         },
       );
     } catch (err) {
-      console.log(err.message);
       return res.status(500).json({ msg: 'Server Error!' });
     }
   } else {
@@ -157,7 +150,6 @@ router.post('/google', async (req, res) => {
       // Hash password before saving in database
       const salt = await bcrypt.genSalt(10);
       const password = 'password- ' + (await bcrypt.hash(email, salt));
-      console.log('user password: ' + password);
 
       user = new User({
         firstName,
@@ -181,15 +173,12 @@ router.post('/google', async (req, res) => {
         process.env.SECRET_KEY,
         { expiresIn: process.env.TOKEN_EXPIRATION },
         (err, token) => {
-          console.log(err);
           if (err)
             return res.json({ msg: 'Cannot generate token as of the moment' });
-          console.log(token);
           res.json({ token });
         },
       );
     } catch (err) {
-      console.log(err.message);
       return res.status(500).json({ msg: 'Server Error' });
     }
   }
@@ -223,7 +212,6 @@ router.post('/forgotpassword', async (req, res) => {
           process.env.SECRET_KEY,
           { expiresIn: '10mins' },
           (err, token) => {
-            console.log(token);
             if (err) {
               return res
                 .status(401)
@@ -240,8 +228,6 @@ router.post('/forgotpassword', async (req, res) => {
                 },
               });
 
-              console.log(process.env.CLIENT_URL);
-
               const emailData = {
                 from: process.env.GOOGLE_EMAIL,
                 to: email,
@@ -256,12 +242,10 @@ router.post('/forgotpassword', async (req, res) => {
               };
               transporter.sendMail(emailData, function (error, info) {
                 if (error) {
-                  console.log(error);
                   res.status(500).json({
                     msg: `Cannot send link to ${email}. There's a failure in our side.`,
                   });
                 } else {
-                  console.log(info);
                   res.json({
                     msg: `Link was successfully sent to ${email}. Please Check your Inbox`,
                   });
@@ -271,11 +255,10 @@ router.post('/forgotpassword', async (req, res) => {
           },
         );
       } catch (err) {
-        console.log(err);
+        res.status(500).json({ msg: 'Server Error!' });
       }
     }
   } catch (err) {
-    console.log(err.message);
     res.status(500).json({ msg: 'Server Error!' });
   }
 });
@@ -289,8 +272,6 @@ router.post('/reset-password', checkTokenMiddleware, async (req, res) => {
   const { password } = req.body;
 
   if (!isValid) {
-    console.log('not valid');
-    console.log(errors);
     return res.status(403).json(errors);
   }
 
@@ -323,7 +304,6 @@ router.post('/reset-password', checkTokenMiddleware, async (req, res) => {
               .status(400)
               .json({ msg: "There's something wrong in saving new password" });
           } else {
-            console.log(result);
             res.json({
               msg: "You've successfully changed your password try login",
             });

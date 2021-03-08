@@ -10,12 +10,10 @@ const checkObjectId = require('../../middleware/checkObjectId');
 // @access     private
 router.get('/:eventId', checkObjectId('eventId'), async (req, res) => {
   try {
-    console.log(req.params.eventId);
     form = await Form.findOne({ eventId: req.params.eventId });
-    console.log(form);
     res.json(form);
   } catch (err) {
-    console.log(ere);
+    res.status(500).json({ msg: "There's an error on our side" });
   }
 });
 

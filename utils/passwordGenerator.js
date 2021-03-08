@@ -12,6 +12,5 @@ module.exports = function makeId(length) {
   for (var i = 0; i < 2; i++) {
     resultNumbers += numbers.charAt(Math.floor(Math.random() * numbersLength));
   }
-  console.log(resultLetters.concat(resultNumbers));
   return resultLetters.concat(resultNumbers);
 };

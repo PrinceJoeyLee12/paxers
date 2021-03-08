@@ -36,8 +36,8 @@ export const storeRegistrantsData = (
   data,
   payThrough,
   amountToPay,
-  reservationSuccessStatus,
-  responseMsg,
+  reservationStatus,
+  token,
 ) => async dispatch => {
   try {
     dispatch(setBackdropLoading(true));
@@ -49,11 +49,10 @@ export const storeRegistrantsData = (
       data,
       payThrough,
       amountToPay,
+      token,
     });
     dispatch(setBackdropLoading(false));
-    console.log(res.data.msg);
-    console.log(res.status);
-    reservationSuccessStatus(res.data.msg, 'success');
+    reservationStatus(res.data.msg, 'success');
   } catch (err) {
     dispatch(setBackdropLoading(false));
     if (err.status === 500)
@@ -61,6 +60,9 @@ export const storeRegistrantsData = (
         "We're sorry there's something wrong on logging your data in our database",
       );
     console.log(err.response);
+    if (err.response.data.msg) {
+      reservationStatus(err.response.data.msg, 'error');
+    }
   }
 };
 

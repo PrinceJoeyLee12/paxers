@@ -14,6 +14,9 @@ const { headerCheckTokenMiddleware } = require('../../middleware/auth');
 const checkObjectId = require('../../middleware/checkObjectId');
 const parser = require('../../middleware/cloudinary.config');
 
+//utils
+const validateReCaptcha = require('../../utils/validateReCaptcha');
+
 //helpers
 const { charReplacer } = require('../../helpers/textFormater');
 
@@ -36,19 +39,17 @@ router.post(
       data,
       payThrough,
       amountToPay,
+      token,
     } = req.body;
 
+    const isHuman = await validateReCaptcha(token);
+    if (!isHuman) return res.status(400).json({ msg: 'Invalid ReCaptcha' });
+
     let user = await User.findById(req.params.userId);
-    console.log(user.id);
     if (!user) {
       return res.status(404).json({ email: 'User not found!' });
     } else {
       try {
-        console.log(
-          moment()
-            .add(process.env.REGISTRATION_EXPIRATION, 'days')
-            .format('MMM DD, YYYY hh:mm a'),
-        );
         let timeToExpire = moment().add(
           process.env.REGISTRATION_EXPIRATION,
           'days',
@@ -66,8 +67,6 @@ router.post(
           },
           data: data,
         });
-
-        console.log(registrant);
 
         registrant.save();
 
@@ -128,7 +127,6 @@ router.post(
           }
         });
       } catch (err) {
-        console.log(err);
         res.json({
           msg: `We're sorry there's a failure in our side. Please try again later`,
         });
@@ -157,10 +155,8 @@ router.get(
         'distanceTypeIsKM',
         'startDate',
       ]);
-      console.log(getRegistrantsByTransactionId);
       res.json(getRegistrantsByTransactionId);
     } catch (err) {
-      console.log(err);
       res.json({
         msg: `Error on getting registrants information. Please try again later`,
       });
@@ -210,7 +206,6 @@ router.post(
           { $set: newRegistrantsInfo },
           { new: true, upsert: true, setDefaultsOnInsert: true },
         );
-        console.log(saveUpdatedRegistrant);
         res.json({
           msg: 'Image was successfully saved to our database.',
           newRegistrantData: saveUpdatedRegistrant,
@@ -221,7 +216,6 @@ router.post(
         });
       }
     } catch (err) {
-      console.log(err);
       res.json({ msg: `Error on saving picture. Please try again` });
     }
   },

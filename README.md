@@ -24,7 +24,8 @@ CLOUDINARY_PROFILE_FOLDER='<folder_for_images>'
 CLOUDINARY_HOST='<host>' // in my case it is "paxers"
 CLOUDINARY_API_SECRET='<api_secret>'
 CLOUDINARY_API_KEY='<api_key>'
-
+#for Recapcha
+RECAPCHA_PRIVATE_KEY='<your_ReCaptcha_private_key' // go to https://www.google.com/recaptcha/admin/create
 ```
 
 ### add a ".env" file in to client/src folder
@@ -33,6 +34,7 @@ CLOUDINARY_API_KEY='<api_key>'
 REACT_APP_BRAND_NAME = 'Paxers';
 //Though I used ( window.location.origin ) it just good to add this one to make sure everything will went well.
 REACT_APP_CLIENT_URL = 'http://localhost:3000';
+REACT_APP_RECAPTCHA_PUBLIC_KEY = '<ReCaptcha_Public_key>'; // go to https://www.google.com/recaptcha/admin/create
 ```
 
 ### Install client dependencies

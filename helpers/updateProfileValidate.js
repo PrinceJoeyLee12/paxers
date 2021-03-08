@@ -41,7 +41,6 @@ module.exports = function validateProfileDetailsInput(data) {
   }
 
   // Birthdate
-  console.log(moment().diff(moment(data.birthDate), 'years'));
   if (Validator.isEmpty(data.birthDate)) {
     errors.birthDate = 'Birthdate field is required';
   } else if (!moment(data.birthDate).isValid()) {

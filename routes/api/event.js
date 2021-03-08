@@ -40,7 +40,6 @@ router.put(
         );
       } else {
         event.likes.unshift({ _id: req.user.id, avatar });
-        console.log(event.likes);
       }
 
       await event.save((err, event) => {
@@ -48,7 +47,6 @@ router.put(
         res.json(event.likes);
       });
     } catch (err) {
-      console.log(err);
       return res
         .status(500)
         .send("We're sorry there's something wrong in our side");
@@ -61,7 +59,6 @@ router.put(
 // @access   Public
 router.get('/', async (req, res) => {
   const events = await Event.find().sort({ date: -1 }).limit(10);
-  console.log(events);
   res.json(events);
 });
 
@@ -70,7 +67,6 @@ router.get('/', async (req, res) => {
 // @access   Public
 router.get('/:id', async (req, res) => {
   const events = await Event.findById(req.params.id);
-  console.log(events);
   res.json(events);
 });
 
@@ -79,7 +75,6 @@ router.get('/:id', async (req, res) => {
 // @access   Public
 router.post('/get-event/:title', async (req, res) => {
   const event = await Event.findOne({ title: req.params.title });
-  console.log(event);
   res.json(event);
 });
 

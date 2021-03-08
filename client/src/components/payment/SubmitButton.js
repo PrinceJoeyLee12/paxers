@@ -1,8 +1,9 @@
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { toast, ToastContainer } from 'react-toastify';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 //actions
 import {
@@ -15,8 +16,9 @@ import { setChanges } from '../../actions/activity';
 //utils
 
 //material ui
-import { Button } from '@material-ui/core';
-
+import { Button, CircularProgress } from '@material-ui/core';
+//material ui colors
+import { green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -24,6 +26,14 @@ const useStyles = makeStyles(theme => ({
     padding: '20px',
     paddingTop: '50px',
     width: '100%',
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 
@@ -41,7 +51,10 @@ const SubmitButton = ({
   history,
 }) => {
   const classes = useStyles();
+  const recaptchaRef = useRef();
   const timer = useRef();
+  const [sending, setSending] = useState(false);
+  const [success, setSuccess] = useState(false);
   const getDataFromPaymentOptionSelected = () => {
     let optionData = {};
     paymentOptions.forEach(option => {
@@ -50,17 +63,24 @@ const SubmitButton = ({
     return optionData;
   };
 
-  const handleSubmit = () => {
-    storeRegistrantsData(
-      _id,
-      eventId,
-      title,
-      getDataFromPaymentOptionSelected(),
-      registrantsData.data,
-      `${optionSelected}`,
-      registrantsData.payment.amountToPay,
-      reservationSuccessStatus,
-    );
+  const handleSubmit = async () => {
+    if (!(sending || success)) {
+      setSending(true);
+      setSuccess(false);
+      const token = await recaptchaRef.current.executeAsync();
+      recaptchaRef.current.reset();
+      storeRegistrantsData(
+        _id,
+        eventId,
+        title,
+        getDataFromPaymentOptionSelected(),
+        registrantsData.data,
+        `${optionSelected}`,
+        registrantsData.payment.amountToPay,
+        reservationStatus,
+        token,
+      );
+    }
   };
 
   //forTimer
@@ -70,11 +90,13 @@ const SubmitButton = ({
     };
   }, []);
 
-  const reservationSuccessStatus = (msg, status) => {
+  const reservationStatus = (msg, status) => {
     toast[`${status}`](`${msg}`);
 
+    setSending(false);
     if (status === 'success') {
       setChanges(true);
+      setSuccess(true);
       clearForm();
       clearRegistrantsData();
       timer.current = window.setTimeout(() => {
@@ -91,6 +113,8 @@ const SubmitButton = ({
       timer.current = window.setTimeout(() => {
         history.goBack();
       }, 7000);
+    } else {
+      setSuccess(false);
     }
   };
 
@@ -98,8 +122,16 @@ const SubmitButton = ({
     <Fragment>
       <ToastContainer />
       <div className={classes.button}>
+        <ReCAPTCHA
+          sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
+          size='invisible'
+          ref={recaptchaRef}
+        />
         <Button variant='contained' color='secondary' onClick={handleSubmit}>
           Reserve my slot
+          {sending && (
+            <CircularProgress size={24} className={classes.buttonProgress} />
+          )}
         </Button>
       </div>
     </Fragment>

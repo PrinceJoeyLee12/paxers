@@ -31,15 +31,12 @@ router.post('/', async (req, res) => {
       email,
       message,
     });
-    console.log(concern.number);
-    console.log(formated_contactNumber);
     await concern.save();
 
     res.json({
       msg: `We already sent your to one of our team please wait for there reply. Thank You!`,
     });
   } catch (err) {
-    console.log(err);
     res.json({
       msg: `We have some difficulties logging your concern. Please try again later.`,
     });

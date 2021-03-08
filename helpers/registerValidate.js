@@ -43,7 +43,6 @@ module.exports = function validateRegisterInput(data) {
   const passwordSchema = new passwordValidator();
   passwordSchema.has().digits(1).has().letters().has().not().spaces();
 
-  console.log(passwordSchema.validate(data.password));
   if (!passwordSchema.validate(data.password)) {
     errors.password =
       'Password must contain letter(s) and number(s) and must not have spaces';

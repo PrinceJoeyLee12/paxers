@@ -22,7 +22,6 @@ router.get(
 
       res.json(activity);
     } catch (err) {
-      console.log(err);
       res.json({ msg: `Something went wrong` });
     }
   },
@@ -40,7 +39,6 @@ router.get(
 
       res.json(activity);
     } catch (err) {
-      console.log(err);
       res.json({ msg: `Something went wrong` });
     }
   },
@@ -68,10 +66,8 @@ router.get(
           'startDate',
         ])
         .sort({ dateRegistered: -1 });
-      console.log(upcomingActivities);
       res.json(upcomingActivities);
     } catch (err) {
-      console.log(err);
       res.json({ msg: `Error on updating settings` });
     }
   },

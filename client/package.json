@@ -29,6 +29,7 @@
     "react-dom": "^16.9.0",
     "react-feather": "^2.0.9",
     "react-google-login": "^5.1.23",
+    "react-google-recaptcha": "^2.1.0",
     "react-moment": "^1.0.0",
     "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
