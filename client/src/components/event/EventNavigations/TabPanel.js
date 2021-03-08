@@ -45,7 +45,9 @@ const TabPanel = ({ value, index, tabLabel, ...other }) => {
         id={`scrollable-prevent-tabpanel-${index}`}
         aria-labelledby={`scrollable-prevent-tab-${index}`}
         {...other}>
-        {value === index && <Box p={3}>{render}</Box>}
+        <div style={{ marginBottom: '200px' }}>
+          {value === index && <Box p={3}>{render}</Box>}
+        </div>
       </div>
     </>
   );

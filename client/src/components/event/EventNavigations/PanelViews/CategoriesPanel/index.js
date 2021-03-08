@@ -26,31 +26,29 @@ const CategoriesPanel = ({
 
   return (
     <Fragment>
-      <div style={{ marginBottom: '50px' }}>
-        <Grid item xs={12}>
-          <Typography variant='h6' color='primary'>
-            Distances
-          </Typography>
-        </Grid>
-        {readyToView ? (
-          categories.map((category, index) => (
-            <CategoriesAccordion
-              key={index}
+      <Grid item xs={12}>
+        <Typography variant='h6' color='primary'>
+          Distances
+        </Typography>
+      </Grid>
+      {readyToView ? (
+        categories.map((category, index) => (
+          <CategoriesAccordion
+            key={index}
+            distanceTypeIsKM={distanceTypeIsKM}
+            distance={category.distance}>
+            <Categories
+              category={category}
               distanceTypeIsKM={distanceTypeIsKM}
-              distance={category.distance}>
-              <Categories
-                category={category}
-                distanceTypeIsKM={distanceTypeIsKM}
-                registrationEnd={registrationEnd}
-              />
-            </CategoriesAccordion>
-          ))
-        ) : (
-          <RenderFallbackOption>
-            <CircularProgress />
-          </RenderFallbackOption>
-        )}
-      </div>
+              registrationEnd={registrationEnd}
+            />
+          </CategoriesAccordion>
+        ))
+      ) : (
+        <RenderFallbackOption>
+          <CircularProgress />
+        </RenderFallbackOption>
+      )}
     </Fragment>
   );
 };

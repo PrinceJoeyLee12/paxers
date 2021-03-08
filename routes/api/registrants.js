@@ -94,7 +94,7 @@ router.post(
                   dataFromPaymentSelected.accountNumber
                 }</p>
                 <p>Transaction ID :  ${transactionId}</p>
-                <p><h3>Here's your link:  <a href='${
+                <p><h3>Upload your payment screenshot here:  <a href='${
                   process.env.CLIENT_URL
                 }/${charReplacer(
             eventTitle,

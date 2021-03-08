@@ -23,41 +23,39 @@ const Prizes = ({ categories, distanceTypeIsKM }) => {
 
   return (
     <Fragment>
-      <div style={{ marginBottom: '50px' }}>
-        <Grid item xs={12}>
-          <Typography variant='h6' color='primary'>
-            Prizes
-          </Typography>
-        </Grid>
-        {readyToView ? (
-          categories.map((category, index) => (
-            <CategoriesAccordion
-              key={index}
-              distanceTypeIsKM={distanceTypeIsKM}
-              distance={category.distance}>
-              {category.prizes.length > 0 ? (
-                <>
-                  <Grid item xs={12}>
-                    <Typography variant='h6' color='primary'>
-                      {category.prizes.map((prize, index) => (
-                        <PrizesDataGrid key={index} prize={prize} />
-                      ))}
-                    </Typography>
-                  </Grid>
-                </>
-              ) : (
-                <RenderFallbackOption key={index}>
-                  <h6>Nothing follows....</h6>
-                </RenderFallbackOption>
-              )}
-            </CategoriesAccordion>
-          ))
-        ) : (
-          <RenderFallbackOption>
-            <CircularProgress />
-          </RenderFallbackOption>
-        )}
-      </div>
+      <Grid item xs={12}>
+        <Typography variant='h6' color='primary'>
+          Prizes
+        </Typography>
+      </Grid>
+      {readyToView ? (
+        categories.map((category, index) => (
+          <CategoriesAccordion
+            key={index}
+            distanceTypeIsKM={distanceTypeIsKM}
+            distance={category.distance}>
+            {category.prizes.length > 0 ? (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant='h6' color='primary'>
+                    {category.prizes.map((prize, index) => (
+                      <PrizesDataGrid key={index} prize={prize} />
+                    ))}
+                  </Typography>
+                </Grid>
+              </>
+            ) : (
+              <RenderFallbackOption key={index}>
+                <h6>Nothing follows....</h6>
+              </RenderFallbackOption>
+            )}
+          </CategoriesAccordion>
+        ))
+      ) : (
+        <RenderFallbackOption>
+          <CircularProgress />
+        </RenderFallbackOption>
+      )}
     </Fragment>
   );
 };

@@ -20,43 +20,38 @@ const ContactInfo = ({ contactInfos }) => {
 
   return (
     <Fragment>
-      <div style={{ marginBottom: '50px' }}>
-        <Grid item xs={12}>
-          <Typography variant='h6' color='primary'>
-            Contact
-          </Typography>
-        </Grid>
-        {readyToView ? (
-          <>
-            {contactInfos.length !== 0 ? (
-              contactInfos.map((contactInfo, index) => (
-                <div key={index} style={{ paddingTop: '10px' }}>
+      <Grid item xs={12}>
+        <Typography variant='h6' color='primary'>
+          Contact
+        </Typography>
+      </Grid>
+      {readyToView ? (
+        <>
+          {contactInfos.length !== 0 ? (
+            contactInfos.map((contactInfo, index) => (
+              <div key={index} style={{ paddingTop: '10px' }}>
+                <Typography display='inline' variant='body1' color='secondary'>
+                  {contactInfo.type}
+                  {' :  '}
                   <Typography
                     display='inline'
-                    variant='body1'
-                    color='secondary'>
-                    {contactInfo.type}
-                    {' :  '}
-                    <Typography
-                      display='inline'
-                      variant='subtitle1'
-                      color='primary'
-                      component='a'>
-                      {contactInfo.address}
-                    </Typography>
+                    variant='subtitle1'
+                    color='primary'
+                    component='a'>
+                    {contactInfo.address}
                   </Typography>
-                </div>
-              ))
-            ) : (
-              <RenderFallbackOption>Nothing follows....</RenderFallbackOption>
-            )}
-          </>
-        ) : (
-          <RenderFallbackOption>
-            <CircularProgress />
-          </RenderFallbackOption>
-        )}
-      </div>
+                </Typography>
+              </div>
+            ))
+          ) : (
+            <RenderFallbackOption>Nothing follows....</RenderFallbackOption>
+          )}
+        </>
+      ) : (
+        <RenderFallbackOption>
+          <CircularProgress />
+        </RenderFallbackOption>
+      )}
     </Fragment>
   );
 };
