@@ -194,8 +194,8 @@ router.post(
   },
 );
 
-// @route      PUT api/user/update-user-profile-details/:userId
-// @desc       Update profile picture
+// @route      PUT api/user/settings/change-unit/:userId
+// @desc       Change unit for prefered used
 // @access     public
 router.put(
   '/settings/change-unit/:userId',
