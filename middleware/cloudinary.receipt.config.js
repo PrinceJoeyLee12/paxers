@@ -15,6 +15,14 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
+//format image
+cloudinary.image((req, file) => file.filename, {
+  transformation: [
+    { width: 600, crop: 'scale' },
+    { quality: 'auto', fetch_format: 'auto' },
+  ],
+});
+
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -22,7 +30,7 @@ const storage = new CloudinaryStorage({
     format: async () => 'png',
     public_id: (req, file) => file.filename,
     transformation: [
-      { width: 200, crop: 'scale' },
+      { width: 600, crop: 'scale' },
       { quality: 'auto', fetch_format: 'auto' },
     ],
   },

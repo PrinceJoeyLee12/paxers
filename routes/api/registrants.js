@@ -12,7 +12,7 @@ const User = require('../../models/User');
 //Middleware
 const { headerCheckTokenMiddleware } = require('../../middleware/auth');
 const checkObjectId = require('../../middleware/checkObjectId');
-const parser = require('../../middleware/cloudinary.config');
+const parser = require('../../middleware/cloudinary.receipt.config');
 
 //utils
 const validateReCaptcha = require('../../utils/validateReCaptcha');

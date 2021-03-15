@@ -103,6 +103,7 @@ router.post(
             { image },
             { new: true, upsert: true, setDefaultsOnInsert: true },
           );
+          console.log(updatedUser);
           res.json({ msg: 'Successfully Changed', user: updatedUser });
         } catch (err) {
           return res.status(400).json({
