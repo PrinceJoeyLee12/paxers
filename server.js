@@ -38,6 +38,16 @@ if (process.env.NODE_ENV === 'development') {
   );
   app.use(morgan('dev'));
 }
+
+if (process.env.NODE_ENV === 'production') {
+  // force to redirect https
+  app.use(function (req, res, next) {
+    if (req.get('X-Forwarded-Proto') !== 'https') {
+      res.redirect('https://' + req.get('Host') + req.url);
+    } else next();
+  });
+}
+
 // api routes
 app.use('/api', require('./routes/api/index'));
 
