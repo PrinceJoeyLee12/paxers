@@ -1,5 +1,5 @@
 import React from 'react';
-import paxers from './paxerswhite.png';
+import paxers from './paxers.png';
 import { withRouter } from 'react-router';
 
 //redux

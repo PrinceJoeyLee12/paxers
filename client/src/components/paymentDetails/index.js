@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Image from 'material-ui-image';
 import classnames from 'classnames';
 import { ToastContainer, toast } from 'react-toastify';
+import moment from 'moment';
 
 //actions
 import {
@@ -87,6 +88,7 @@ const RegistrationStatus = ({
 }) => {
   const classes = useStyles();
   const [readyToView, setReadyToView] = useState(false);
+  const [isExpired, setIsExpired] = useState(false);
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [image, setImage] = useState({
@@ -114,6 +116,13 @@ const RegistrationStatus = ({
     match.params.transactionId,
     getUpcomingEventByTransactionId,
   ]);
+
+  useEffect(() => {
+    // console.log(moment(rowSelected.expirationDate).isSameOrAfter(moment()));
+    if (moment(rowSelected.expirationDate).isSameOrAfter(moment()))
+      setIsExpired(false);
+    else setIsExpired(true);
+  }, [rowSelected.expirationDate, setIsExpired]);
 
   const handleChange = event => {
     if (event.target.files[0]) {
@@ -158,111 +167,145 @@ const RegistrationStatus = ({
   return (
     <Fragment>
       <ToastContainer />
-      {readyToView ? (
-        <Paper className={classes.root}>
-          <Grid
-            container
-            justify='center'
-            alignItems='center'
-            className={classes.grid}>
-            {filePath ? (
+
+      {!isExpired || filePath ? (
+        readyToView ? (
+          <Paper className={classes.root}>
+            <Grid
+              container
+              justify='center'
+              alignItems='center'
+              className={classes.grid}>
+              {filePath ? (
+                <Grid item xs={12} className={classes.gridItem}>
+                  <Image src={filePath} className={classes.image}></Image>
+                </Grid>
+              ) : (
+                ''
+              )}
               <Grid item xs={12} className={classes.gridItem}>
-                <Image src={filePath} className={classes.image}></Image>
+                <Typography variant='h6' style={{ paddingTop: '20px' }}>
+                  {fileName}
+                </Typography>
               </Grid>
-            ) : (
-              ''
-            )}
-            <Grid item xs={12} className={classes.gridItem}>
-              <Typography variant='h6' style={{ paddingTop: '20px' }}>
-                {fileName}
-              </Typography>
-            </Grid>
-            {rowSelected.status === 'unpaid' ? (
-              !success ? (
+              {rowSelected.status === 'unpaid' ? (
+                !success ? (
+                  <Grid
+                    item
+                    xs={12}
+                    style={{ marginTop: '30px' }}
+                    className={classes.gridItem}>
+                    <input
+                      accept='image/*'
+                      className={classes.input}
+                      id='receipt-image-upload'
+                      type='file'
+                      onChange={handleChange}
+                    />
+                    <label
+                      htmlFor='receipt-image-upload'
+                      style={{ disabled: sending }}>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        component='span'
+                        className={classes.button}
+                        disabled={sending}
+                        startIcon={<PhotoSizeSelectActualOutlinedIcon />}>
+                        Select Screenshot of Payment
+                      </Button>
+                    </label>
+                  </Grid>
+                ) : (
+                  ''
+                )
+              ) : (
                 <Grid
                   item
                   xs={12}
                   style={{ marginTop: '30px' }}
                   className={classes.gridItem}>
-                  <input
-                    accept='image/*'
-                    className={classes.input}
-                    id='receipt-image-upload'
-                    type='file'
-                    onChange={handleChange}
-                  />
-                  <label
-                    htmlFor='receipt-image-upload'
-                    style={{ disabled: sending }}>
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      component='span'
-                      className={classes.button}
-                      disabled={sending}
-                      startIcon={<PhotoSizeSelectActualOutlinedIcon />}>
-                      Select Screenshot of Payment
-                    </Button>
-                  </label>
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    component='span'
+                    className={classes.button}
+                    onClick={() => {
+                      removeRowSelected();
+                      history.push('/my-activities');
+                    }}
+                    startIcon={<ArrowBackOutlinedIcon />}>
+                    Go Back
+                  </Button>
+                </Grid>
+              )}
+              {fileName ? (
+                <Grid
+                  item
+                  xs={12}
+                  style={{ marginTop: '30px' }}
+                  className={classes.gridItem}>
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    component='span'
+                    className={classnames(classes.button, {
+                      [classes.buttonSuccess]: success,
+                    })}
+                    startIcon={<CloudUploadIcon />}
+                    onClick={handleUpload}>
+                    {success ? 'Uploaded' : 'Upload'}
+                    {sending && (
+                      <CircularProgress
+                        size={24}
+                        className={classes.buttonProgress}
+                      />
+                    )}
+                  </Button>
                 </Grid>
               ) : (
                 ''
-              )
-            ) : (
-              <Grid
-                item
-                xs={12}
-                style={{ marginTop: '30px' }}
-                className={classes.gridItem}>
-                <Button
-                  variant='contained'
-                  color='secondary'
-                  component='span'
-                  className={classes.button}
-                  onClick={() => {
-                    removeRowSelected();
-                    history.goBack()
-                      ? history.push('/my-activities')
-                      : history.goBack();
-                  }}
-                  startIcon={<ArrowBackOutlinedIcon />}>
-                  Go Back
-                </Button>
-              </Grid>
-            )}
-            {fileName ? (
-              <Grid
-                item
-                xs={12}
-                style={{ marginTop: '30px' }}
-                className={classes.gridItem}>
-                <Button
-                  variant='contained'
-                  color='secondary'
-                  component='span'
-                  className={classnames(classes.button, {
-                    [classes.buttonSuccess]: success,
-                  })}
-                  startIcon={<CloudUploadIcon />}
-                  onClick={handleUpload}>
-                  {success ? 'Uploaded' : 'Upload'}
-                  {sending && (
-                    <CircularProgress
-                      size={24}
-                      className={classes.buttonProgress}
-                    />
-                  )}
-                </Button>
-              </Grid>
-            ) : (
-              ''
-            )}
-          </Grid>
-        </Paper>
+              )}
+            </Grid>
+          </Paper>
+        ) : (
+          <RenderFallbackOption>
+            <CircularProgress />
+          </RenderFallbackOption>
+        )
       ) : (
-        <RenderFallbackOption>
-          <CircularProgress />
-        </RenderFallbackOption>
+        <Fragment>
+          <h2>
+            <span
+              style={{
+                paddingTop: '20px',
+                margin: 'auto',
+                fontWeight: '700px',
+              }}>
+              Transaction is Already Expired
+            </span>
+          </h2>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              style={{ marginTop: '30px' }}
+              className={classes.gridItem}>
+              <Button
+                variant='contained'
+                color='secondary'
+                component='span'
+                className={classes.button}
+                onClick={() => {
+                  removeRowSelected();
+                  history.push('/my-activities');
+                }}
+                startIcon={<ArrowBackOutlinedIcon />}>
+                Go Back
+              </Button>
+            </Grid>
+          </Grid>
+        </Fragment>
       )}
     </Fragment>
   );

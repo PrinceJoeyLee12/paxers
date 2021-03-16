@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Fragment } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -10,7 +10,6 @@ import { getEvent, setLoading } from '../../actions/event';
 //components
 import MainImage from './MainImage';
 import Organizer from './Organizer';
-import EventNavigations from './EventNavigations/';
 import RegistrationButton from './RegistrationButton';
 
 //material UI
@@ -21,6 +20,8 @@ import {
   Typography,
   CircularProgress,
 } from '@material-ui/core';
+
+const EventNavigations = React.lazy(() => import('./EventNavigations/'));
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -90,7 +91,9 @@ const Event = ({ match, event: { loading, event }, getEvent, setLoading }) => {
               categories={categories}
               registrationEnd={registrationEnd}
             />
-            <EventNavigations />
+            <Suspense fallback=''>
+              <EventNavigations />
+            </Suspense>
           </Card>
         </>
       )}

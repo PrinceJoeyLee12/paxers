@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Fragment } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 //components
-import Navbar from './Navbar';
 import DialogBox from './DialogBox';
+const Navbar = React.lazy(() => import('./Navbar'));
 
 const MyRacesAndActivities = () => {
   return (
     <Fragment>
       <ToastContainer />
       <DialogBox />
-      <Navbar />
+      <Suspense fallback='Loading...'>
+        <Navbar />
+      </Suspense>
     </Fragment>
   );
 };

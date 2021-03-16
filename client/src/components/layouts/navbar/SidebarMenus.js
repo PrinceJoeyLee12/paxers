@@ -46,6 +46,7 @@ const SidebarNavItems = ({
   title,
   handleDrawerToggle,
   match,
+  staticContext,
   ...rest
 }) => {
   const classes = useStyles();
@@ -59,9 +60,9 @@ const SidebarNavItems = ({
       {...rest}>
       <Button
         onClick={isMobile ? handleDrawerToggle : () => {}}
-        component={RouterLink}
         className={classes.button}
         activeClassName={classes.active}
+        component={RouterLink}
         to={href}>
         {Icon && <Icon className={classes.icon} size='20' />}
         <span className={classes.title}>{title}</span>

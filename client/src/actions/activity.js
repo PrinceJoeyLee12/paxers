@@ -69,7 +69,6 @@ export const getUpcomingEventByTransactionId = (
       data: { categorySelected },
       dateRegistered,
     } = res.data;
-    console.log(window.location.origin);
     dispatch({
       type: SET_ROW_SELECTED,
       payload: {

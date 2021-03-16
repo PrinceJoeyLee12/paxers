@@ -81,7 +81,7 @@ const UpcomingActivities = ({
               : ''
           }`,
           dateReserved: `${moment(activity.dateRegistered).format(
-            'MMM DD, YYYY hh:mm a',
+            'MMM DD YYYY hh:mm a',
           )}`,
           nameOfEvent: `${activity.event.title}`,
           dateOfEvent: `${
@@ -89,13 +89,13 @@ const UpcomingActivities = ({
               moment(activity.event.startDate),
               'days',
             )
-              ? `${moment(activity.event.endDate).format('MMM DD, YYYY')}`
+              ? `${moment(activity.event.endDate).format('MMM DD YYYY')}`
               : `${`${moment(activity.event.endDate).format(
-                  'MMM DD, YYYY',
-                )} - ${moment(activity.event.endDate).format('MMM DD, YYYY')}`}`
+                  'MMM DD YYYY',
+                )} - ${moment(activity.event.endDate).format('MMM DD YYYY')}`}`
           }`,
           expirationDate: `${moment(activity.payment.timeToExpire).format(
-            'MMM DD, YYYY hh:mm a',
+            'MMM DD YYYY hh:mm a',
           )}`,
           paymentMethod: `${activity.payment.payThrough}`,
           amountToPay: `₱ ${activity.payment.amountToPay}`,
