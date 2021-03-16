@@ -7,6 +7,7 @@ config/config.env
 
 #client
 client/build
+client/.env
 client/.gitignore
 client/debug.log
 client/node_modules

@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Button, ListItem, useMediaQuery } from '@material-ui/core';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   item: {
@@ -44,6 +45,7 @@ const SidebarNavItems = ({
   icon: Icon,
   title,
   handleDrawerToggle,
+  match,
   ...rest
 }) => {
   const classes = useStyles();
@@ -57,9 +59,9 @@ const SidebarNavItems = ({
       {...rest}>
       <Button
         onClick={isMobile ? handleDrawerToggle : () => {}}
-        activeClassName={classes.active}
-        className={classes.button}
         component={RouterLink}
+        className={classes.button}
+        activeClassName={classes.active}
         to={href}>
         {Icon && <Icon className={classes.icon} size='20' />}
         <span className={classes.title}>{title}</span>
@@ -75,4 +77,4 @@ SidebarNavItems.propTypes = {
   title: PropTypes.string,
 };
 
-export default SidebarNavItems;
+export default withRouter(SidebarNavItems);
